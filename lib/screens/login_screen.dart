@@ -1,10 +1,17 @@
+import 'package:dsc_shop/screens/home_screen.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dsc_shop/constants.dart';
 
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    String _email = "";
+    String _password = "";
+    final auth = FirebaseAuth.instance;
     bool secured = false;
+    TextEditingController emailController = TextEditingController();
+    TextEditingController passwordController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
     return Scaffold(
       body: SafeArea(
@@ -49,11 +56,14 @@ class Login extends StatelessWidget {
                   children: [
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
+                      controller: emailController,
                       decoration:
                           kTextFieldDecoration.copyWith(labelText: 'Email'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return ('Email required');
+                        } else if (!value.contains("@")) {
+                          return "Not a valid Email address";
                         }
                         return null;
                       },
@@ -64,6 +74,7 @@ class Login extends StatelessWidget {
                     TextFormField(
                       obscureText: secured,
                       keyboardType: TextInputType.visiblePassword,
+                      controller: passwordController,
                       decoration: kTextFieldDecoration.copyWith(
                         labelText: 'Password',
                         prefixIcon: Icon(Icons.lock),
@@ -85,6 +96,8 @@ class Login extends StatelessWidget {
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return ('password required');
+                        } else if (value.length < 4) {
+                          return "Password Can't be less than 4 characters";
                         }
                         return null;
                       },
@@ -106,6 +119,18 @@ class Login extends StatelessWidget {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               }
+                              _email = emailController.text;
+                              _password = passwordController.text;
+                              auth
+                                  .createUserWithEmailAndPassword(
+                                      email: _email, password: _password)
+                                  .then((_) => {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomeScreen()))
+                                      });
                               // openAlert();
                             },
                             child: Padding(
@@ -128,6 +153,18 @@ class Login extends StatelessWidget {
                                 return;
                               }
                               // openAlert();
+                              _email = emailController.text;
+                              _password = passwordController.text;
+                              auth
+                                  .signInWithEmailAndPassword(
+                                      email: _email, password: _password)
+                                  .then((_) => {
+                                        Navigator.push(
+                                            context,
+                                            MaterialPageRoute(
+                                                builder: (context) =>
+                                                    HomeScreen()))
+                                      });
                             },
                             child: Padding(
                               padding:
