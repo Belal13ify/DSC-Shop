@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/app_provider.dart';
+import 'package:dsc_shop/providers/navScreenProvider.dart';
 
 //Bottom Navigation bar widget
 class BottomNavBar extends StatelessWidget {
@@ -36,10 +39,12 @@ class BottomNavBar extends StatelessWidget {
             label: 'Shopping Cart',
           ),
         ],
-        currentIndex: 0,
+        currentIndex: Provider.of<NavigationProvider>(context).selectedScreen,
         selectedItemColor: Colors.white,
         onTap: (index) {
           // controller.onItemTapped(index);
+          Provider.of<NavigationProvider>(context, listen: false)
+              .onScreenTaped(index);
         },
       ),
     );

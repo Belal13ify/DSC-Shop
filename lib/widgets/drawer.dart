@@ -1,4 +1,7 @@
+import 'package:dsc_shop/providers/themeProvider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class DrawerSection extends StatelessWidget {
   @override
@@ -34,11 +37,13 @@ class DrawerSection extends StatelessWidget {
             trailing: Switch(
                 activeColor: Colors.green,
                 // value: controler.isActive,
-                value: true,
+                value: Provider.of<ThemeProvider>(context).isActive,
                 onChanged: (val) async {
-                  // final prefs = await SharedPreferences.getInstance();
-                  // prefs.setBool('isDark', val);
-                  // controler.checkMode();
+                  final prefs = await SharedPreferences.getInstance();
+                  prefs.setBool('isDark', val);
+
+                  Provider.of<ThemeProvider>(context, listen: false)
+                      .checkDarkMode();
                 }),
           )
         ],
