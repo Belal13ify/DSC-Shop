@@ -1,15 +1,17 @@
+import 'package:dsc_shop/providers/app_provider.dart';
 import 'package:dsc_shop/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dsc_shop/constants.dart';
+import 'package:provider/provider.dart';
 
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final auth = FirebaseAuth.instance;
     String _email = "";
     String _password = "";
-    final auth = FirebaseAuth.instance;
-    bool secured = false;
+
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
@@ -44,10 +46,8 @@ class Login extends StatelessWidget {
                 ),
                 Text('Sign up or Login to an existing account',
                     textAlign: TextAlign.center,
-                    style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold)),
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 SizedBox(
                   height: 40.0,
                 ),
@@ -71,37 +71,37 @@ class Login extends StatelessWidget {
                     SizedBox(
                       height: 25.0,
                     ),
-                    TextFormField(
-                      obscureText: secured,
-                      keyboardType: TextInputType.visiblePassword,
-                      controller: passwordController,
-                      decoration: kTextFieldDecoration.copyWith(
-                        labelText: 'Password',
-                        prefixIcon: Icon(Icons.lock),
-                        suffixIcon: IconButton(
-                          onPressed: () {
-                            // setState(() {
-                            //   secured = !secured;
-                            // });
-                          },
-                          icon: Icon(
-                            secured
-                                ? Icons.visibility_sharp
-                                : Icons.visibility_off,
-                            color: Colors.blue,
-                            size: 22,
+                    Consumer<Others>(builder: (context, other, child) {
+                      return TextFormField(
+                        obscureText: other.secured,
+                        keyboardType: TextInputType.visiblePassword,
+                        controller: passwordController,
+                        decoration: kTextFieldDecoration.copyWith(
+                          labelText: 'Password',
+                          prefixIcon: Icon(Icons.lock),
+                          suffixIcon: IconButton(
+                            onPressed: () {
+                              other.togglePassword();
+                            },
+                            icon: Icon(
+                              other.secured
+                                  ? Icons.visibility_sharp
+                                  : Icons.visibility_off,
+                              color: Colors.blue,
+                              size: 22,
+                            ),
                           ),
                         ),
-                      ),
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return ('password required');
-                        } else if (value.length < 4) {
-                          return "Password Can't be less than 4 characters";
-                        }
-                        return null;
-                      },
-                    ),
+                        validator: (value) {
+                          if (value == null || value.isEmpty) {
+                            return ('password required');
+                          } else if (value.length < 4) {
+                            return "Password Can't be less than 4 characters";
+                          }
+                          return null;
+                        },
+                      );
+                    }),
                     SizedBox(
                       height: 40,
                     ),

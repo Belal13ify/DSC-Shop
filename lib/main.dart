@@ -21,7 +21,8 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<NavigationProvider>(
             create: (context) => NavigationProvider()),
         ChangeNotifierProvider<ThemeProvider>(
-            create: (context) => ThemeProvider())
+            create: (context) => ThemeProvider()),
+        ChangeNotifierProvider<Others>(create: (context) => Others()),
       ],
       child: MaterialAppWithTheme(),
     );
