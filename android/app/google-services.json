@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "481679814066",
+    "project_id": "dsc-shop",
+    "storage_bucket": "dsc-shop.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:481679814066:android:a359fa6b32c17ef87ac8ab",
+        "android_client_info": {
+          "package_name": "com.example.dsc_shop"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "481679814066-6oaqlu1t0tf27sb1e48ckcikv1uu5q0d.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.dsc_shop",
+            "certificate_hash": "c601b6bc7688754bf5eaebfd196b4d3bd524d64a"
+          }
+        },
+        {
+          "client_id": "481679814066-b56o850vqlhnt4sl3mj8a4gqk98prf84.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCQC38jrDB7E_MHf3ycgpKbREu9ro1Z7Dc"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "481679814066-b56o850vqlhnt4sl3mj8a4gqk98prf84.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
