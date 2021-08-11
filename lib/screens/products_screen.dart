@@ -32,7 +32,7 @@ class Products extends StatelessWidget {
           mainAxisSpacing: 10),
       itemBuilder: (context, index) {
         var productData = products[index];
-        int id = productData.id;
+        // int id = productData.id;
         String title = productData.title;
         String description = productData.description;
         dynamic price = productData.price;
