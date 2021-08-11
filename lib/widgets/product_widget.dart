@@ -4,19 +4,20 @@ class SingleProduct extends StatelessWidget {
   final String title;
   final dynamic price;
   final String imageSrc;
-  // final VoidCallback pressed;
+  final String descrition;
+  final VoidCallback pressed;
 
-  SingleProduct({
-    required this.title,
-    required this.price,
-    required this.imageSrc,
-    // required this.pressed
-  });
+  SingleProduct(
+      {required this.title,
+      required this.price,
+      required this.imageSrc,
+      required this.pressed,
+      this.descrition = ""});
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () {},
+      onTap: pressed,
       child: Card(
         child: Padding(
           padding: const EdgeInsets.only(left: 10.0, right: 10),
