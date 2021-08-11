@@ -1,3 +1,4 @@
+import 'package:dsc_shop/providers/jsonData_providerd.dart';
 import 'package:dsc_shop/providers/navScreenProvider.dart';
 import 'package:dsc_shop/providers/themeProvider.dart';
 import 'package:flutter/material.dart';
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<ThemeProvider>(
             create: (context) => ThemeProvider()),
         ChangeNotifierProvider<Others>(create: (context) => Others()),
+        ChangeNotifierProvider<Data>(create: (context) => Data()),
       ],
       child: MaterialAppWithTheme(),
     );

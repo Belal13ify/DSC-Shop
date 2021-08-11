@@ -1,4 +1,6 @@
+import 'package:dsc_shop/models/product_model.dart';
 import 'package:dsc_shop/providers/app_provider.dart';
+import 'package:dsc_shop/providers/jsonData_providerd.dart';
 import 'package:dsc_shop/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +13,11 @@ class Login extends StatelessWidget {
     final auth = FirebaseAuth.instance;
     String _email = "";
     String _password = "";
-
+    List<Product> products = [];
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
+
     return Scaffold(
       body: SafeArea(
           child: Form(
@@ -121,6 +124,7 @@ class Login extends StatelessWidget {
                               }
                               _email = emailController.text;
                               _password = passwordController.text;
+
                               auth
                                   .createUserWithEmailAndPassword(
                                       email: _email, password: _password)
@@ -129,7 +133,8 @@ class Login extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    HomeScreen()))
+                                                    HomeScreen(
+                                                        products: products)))
                                       });
                               // openAlert();
                             },
@@ -148,13 +153,18 @@ class Login extends StatelessWidget {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 12),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               }
                               // openAlert();
                               _email = emailController.text;
                               _password = passwordController.text;
+                              await Provider.of<Data>(context, listen: false)
+                                  .getData();
+                              products =
+                                  Provider.of<Data>(context, listen: false)
+                                      .products;
                               auth
                                   .signInWithEmailAndPassword(
                                       email: _email, password: _password)
@@ -163,7 +173,8 @@ class Login extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    HomeScreen()))
+                                                    HomeScreen(
+                                                        products: products)))
                                       });
                             },
                             child: Padding(
