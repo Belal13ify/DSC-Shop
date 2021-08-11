@@ -17,6 +17,6 @@ class Product {
         title: parsedJson['title'],
         price: parsedJson['price'],
         description: parsedJson['description'],
-        image: parsedJson['description']);
+        image: parsedJson['image']);
   }
 }
