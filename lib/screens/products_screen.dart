@@ -5,11 +5,9 @@ import '../widgets/search.dart';
 import 'package:provider/provider.dart';
 
 class Products extends StatelessWidget {
-  final List<Product> products;
-  Products({required this.products});
   @override
   Widget build(BuildContext context) {
-    // List<Product> products = [];
+    List<Product> products = Provider.of<Data>(context).products;
     return Padding(
         padding: EdgeInsets.all(10),
         child: ListView.builder(

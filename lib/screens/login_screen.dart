@@ -133,8 +133,7 @@ class Login extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    HomeScreen(
-                                                        products: products)))
+                                                    HomeScreen()))
                                       });
                               // openAlert();
                             },
@@ -173,8 +172,7 @@ class Login extends StatelessWidget {
                                             context,
                                             MaterialPageRoute(
                                                 builder: (context) =>
-                                                    HomeScreen(
-                                                        products: products)))
+                                                    HomeScreen()))
                                       });
                             },
                             child: Padding(
