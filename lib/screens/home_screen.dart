@@ -1,7 +1,7 @@
 import 'package:dsc_shop/providers/navScreenProvider.dart';
 import 'package:dsc_shop/providers/themeProvider.dart';
 import 'package:dsc_shop/screens/products_screen.dart';
-import 'package:dsc_shop/screens/shopping_screen.dart';
+import 'package:dsc_shop/screens/shoppingCart_screen.dart';
 import 'package:dsc_shop/screens/wishlist_screen.dart';
 import 'package:dsc_shop/widgets/botom_navigation.dart';
 import 'package:dsc_shop/widgets/drawer.dart';
