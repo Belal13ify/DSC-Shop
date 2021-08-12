@@ -1,4 +1,4 @@
-import 'package:dsc_shop/providers/jsonData_providerd.dart';
+import 'package:dsc_shop/providers/jsonData_provider.dart';
 import 'package:dsc_shop/providers/navScreenProvider.dart';
 import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:dsc_shop/providers/themeProvider.dart';
