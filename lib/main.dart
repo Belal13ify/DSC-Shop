@@ -1,5 +1,6 @@
 import 'package:dsc_shop/providers/jsonData_providerd.dart';
 import 'package:dsc_shop/providers/navScreenProvider.dart';
+import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:dsc_shop/providers/themeProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -21,6 +22,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<NavigationProvider>(
             create: (context) => NavigationProvider()),
+        ChangeNotifierProvider<FirebaseProvider>(
+            create: (context) => FirebaseProvider()),
         ChangeNotifierProvider<ThemeProvider>(
             create: (context) => ThemeProvider()),
         ChangeNotifierProvider<Others>(create: (context) => Others()),

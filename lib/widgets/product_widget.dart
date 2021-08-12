@@ -7,6 +7,8 @@ class SingleProduct extends StatelessWidget {
   final String descrition;
   final String category;
   final VoidCallback pressed;
+  final VoidCallback addToCart;
+  final VoidCallback addToWishlist;
 
   SingleProduct(
       {required this.title,
@@ -14,7 +16,9 @@ class SingleProduct extends StatelessWidget {
       required this.imageSrc,
       required this.pressed,
       this.descrition = "",
-      this.category = ""});
+      this.category = "",
+      required this.addToCart,
+      required this.addToWishlist});
 
   @override
   Widget build(BuildContext context) {
@@ -44,7 +48,7 @@ class SingleProduct extends StatelessWidget {
                   ),
                 ),
                 IconButton(
-                    onPressed: () {},
+                    onPressed: addToWishlist,
                     icon: IconButton(
                         onPressed: () {},
                         icon: Icon(
@@ -53,7 +57,7 @@ class SingleProduct extends StatelessWidget {
                         )))
               ]),
               ElevatedButton(
-                  onPressed: () {},
+                  onPressed: addToCart,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [

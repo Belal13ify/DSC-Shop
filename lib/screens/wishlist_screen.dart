@@ -1,10 +1,14 @@
 import 'package:dsc_shop/models/product_model.dart';
+import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:flutter/material.dart';
 import '../widgets/favourite_item.dart';
+import 'package:provider/provider.dart';
 
 class Wishlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    List<Product> FavProducts =
+        Provider.of<FirebaseProvider>(context).favProducts;
     List<Product> favouriteProducts = [
       Product(
           id: 1,
