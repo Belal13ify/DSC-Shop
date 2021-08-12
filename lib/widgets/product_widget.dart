@@ -5,6 +5,7 @@ class SingleProduct extends StatelessWidget {
   final dynamic price;
   final String imageSrc;
   final String descrition;
+  final String category;
   final VoidCallback pressed;
 
   SingleProduct(
@@ -12,7 +13,8 @@ class SingleProduct extends StatelessWidget {
       required this.price,
       required this.imageSrc,
       required this.pressed,
-      this.descrition = ""});
+      this.descrition = "",
+      this.category = ""});
 
   @override
   Widget build(BuildContext context) {
@@ -34,11 +36,21 @@ class SingleProduct extends StatelessWidget {
               ),
               Text(title, style: TextStyle(fontSize: 16)),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                Text(
-                  "\$$price",
-                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
+                Padding(
+                  padding: const EdgeInsets.only(top: 10.0),
+                  child: Text(
+                    "\$$price",
+                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  ),
                 ),
-                IconButton(onPressed: () {}, icon: Icon(Icons.favorite))
+                IconButton(
+                    onPressed: () {},
+                    icon: IconButton(
+                        onPressed: () {},
+                        icon: Icon(
+                          Icons.favorite,
+                          size: 25,
+                        )))
               ]),
               ElevatedButton(
                   onPressed: () {},
@@ -51,7 +63,7 @@ class SingleProduct extends StatelessWidget {
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),
                       Icon(
-                        Icons.shopping_basket,
+                        Icons.add_shopping_cart,
                         size: 25,
                       )
                     ],

@@ -7,14 +7,15 @@ import '../widgets/product_widget.dart';
 import 'product_details.dart';
 
 class Products extends StatelessWidget {
-  void productInfo(
-      String title, String description, dynamic price, String image, context) {
+  void productInfo(String title, String description, String category,
+      dynamic price, String image, context) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ProductDetails(
                   title: title,
                   description: description,
+                  category: category,
                   price: price,
                   image: image,
                 )));
@@ -32,9 +33,10 @@ class Products extends StatelessWidget {
           mainAxisSpacing: 10),
       itemBuilder: (context, index) {
         var productData = products[index];
-        // int id = productData.id;
+
         String title = productData.title;
         String description = productData.description;
+        String category = productData.category;
         dynamic price = productData.price;
         String image = productData.image;
 
@@ -47,9 +49,8 @@ class Products extends StatelessWidget {
             title: title,
             price: price,
             imageSrc: image,
-            pressed: () =>
-                productInfo(title, description, price, image, context));
-        // return Text("${products[index].id}");
+            pressed: () => productInfo(productData.title, description, category,
+                price, image, context));
       },
       itemCount: products.length,
     );
