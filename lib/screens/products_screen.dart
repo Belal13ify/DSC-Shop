@@ -8,8 +8,8 @@ import '../widgets/product_widget.dart';
 import 'product_details.dart';
 
 class Products extends StatelessWidget {
-  void productInfo(String title, String description, String category,
-      dynamic price, String image, context) {
+  void productInfo(String title, String description, String category, num price,
+      String image, context) {
     Navigator.push(
         context,
         MaterialPageRoute(
@@ -54,39 +54,72 @@ class Products extends StatelessWidget {
     //       category: "",
     //       image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg")
     // ];
-    List<Product> products = Provider.of<Data>(context).products;
+    List<Product> products = Provider.of<Data>(context, listen: false).products;
     return Consumer<FirebaseProvider>(builder: (context, fb, child) {
-      return GridView.builder(
-        padding: EdgeInsets.all(5),
-        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            childAspectRatio: 2 / 3,
-            crossAxisSpacing: 8,
-            mainAxisSpacing: 10),
-        itemBuilder: (context, index) {
-          var productData = products[index];
+      return Column(
+        children: [
+          SizedBox(
+            height: 5,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                Expanded(child: Search()),
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.red,
+                      child: Text(fb.itemCount.toString()),
+                    ),
+                    Icon(
+                      Icons.shopping_cart,
+                      size: 30,
+                    )
+                  ],
+                ),
+              ],
+            ),
+          ),
+          Expanded(
+            child: GridView.builder(
+              padding: EdgeInsets.all(5),
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: 2 / 3,
+                  crossAxisSpacing: 8,
+                  mainAxisSpacing: 10),
+              itemBuilder: (context, index) {
+                var productData = products[index];
 
-          String title = productData.title;
-          String description = productData.description;
-          String category = productData.category;
-          dynamic price = productData.price;
-          String image = productData.image;
+                String title = productData.title;
+                String description = productData.description;
+                String category = productData.category;
+                num price = productData.price;
+                String image = productData.image;
 
-          if (title.length > 20) {
-            String strippedtitle = title.substring(0, 20);
-            title = strippedtitle;
-          }
-          print(productData.image[0]);
-          return SingleProduct(
-              title: title,
-              price: price,
-              imageSrc: image,
-              addToCart: () => fb.addtoCart(productData),
-              addToWishlist: () => fb.addToWishList(),
-              pressed: () => productInfo(productData.title, description,
-                  category, price, image, context));
-        },
-        itemCount: products.length,
+                if (title.length > 20) {
+                  String strippedtitle = title.substring(0, 20);
+                  title = strippedtitle;
+                }
+
+                return SingleProduct(
+                    title: title,
+                    price: price,
+                    imageSrc: image,
+                    // addToCart: () => fb.addtoCart(productData),
+                    addToCart: () => fb.addItem(productData.id.toString(),
+                        productData.title, productData.price),
+                    addToWishlist: () => fb.addToWishList(),
+                    pressed: () => productInfo(productData.title, description,
+                        category, price, image, context));
+              },
+              itemCount: products.length,
+            ),
+          ),
+        ],
       );
     });
   }

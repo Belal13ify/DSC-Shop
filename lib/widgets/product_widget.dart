@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class SingleProduct extends StatelessWidget {
   final String title;
-  final dynamic price;
+  final num price;
   final String imageSrc;
   final String descrition;
   final String category;
@@ -32,8 +32,8 @@ class SingleProduct extends StatelessWidget {
             children: [
               Image.network(
                 imageSrc,
-                width: 120,
-                height: 120,
+                width: 90,
+                height: 90,
               ),
               SizedBox(
                 height: 15,

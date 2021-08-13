@@ -5,7 +5,7 @@ class Search extends StatelessWidget {
   Widget build(BuildContext context) {
     TextEditingController searchController = TextEditingController();
     return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 10),
+        padding: const EdgeInsets.symmetric(horizontal: 15),
         child: TextField(
           onChanged: (val) {
             // value.search(val);
@@ -32,7 +32,7 @@ class Search extends StatelessWidget {
               },
             ),
             border: OutlineInputBorder(
-              borderRadius: BorderRadius.all(Radius.circular(20.0)),
+              borderRadius: BorderRadius.all(Radius.circular(10.0)),
             ),
           ),
         ));

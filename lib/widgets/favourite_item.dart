@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 class FavouriteItem extends StatelessWidget {
   final String title;
-  final dynamic price;
+  final num price;
   final String image;
   final VoidCallback deleteFavourite;
 

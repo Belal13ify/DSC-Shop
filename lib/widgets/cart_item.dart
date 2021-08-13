@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 class CartItem extends StatelessWidget {
   final int id;
   final String title;
-  final dynamic price;
-  final int itemCount;
+  final num price;
+  final int quantity;
   final String image;
   final VoidCallback plusItem;
   final VoidCallback minusItem;
@@ -13,7 +13,7 @@ class CartItem extends StatelessWidget {
       {required this.id,
       required this.title,
       required this.price,
-      required this.itemCount,
+      required this.quantity,
       required this.image,
       required this.plusItem,
       required this.minusItem});
@@ -70,7 +70,7 @@ class CartItem extends StatelessWidget {
                         Icons.remove_circle_outline,
                         size: 30,
                       )),
-                  Text("$itemCount"),
+                  Text("$quantity"),
                   IconButton(
                       onPressed: () => plusItem,
                       icon: Icon(

@@ -4,7 +4,7 @@ class ProductDetails extends StatelessWidget {
   final String title;
   final String description;
   final String category;
-  final dynamic price;
+  final num price;
   final String image;
 
   ProductDetails(
