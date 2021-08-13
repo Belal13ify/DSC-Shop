@@ -1,6 +1,6 @@
 import 'package:dsc_shop/models/product_model.dart';
 import 'package:dsc_shop/providers/app_provider.dart';
-import 'package:dsc_shop/providers/jsonData_providerd.dart';
+import 'package:dsc_shop/providers/jsonData_provider.dart';
 import 'package:dsc_shop/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';

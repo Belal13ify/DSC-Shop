@@ -14,7 +14,18 @@ class FirebaseProvider with ChangeNotifier {
     firestore = FirebaseFirestore.instance;
   }
 
-  void addtoCart() {}
+  void addtoCart(Product product) {
+    if (cartProducts.isEmpty) {
+      cartProducts.add(product);
+      cartProductCount++;
+    }
+    if (!cartProducts.map((p) => p.id).toList().contains(product.id)) {
+      cartProducts.add(product);
+      cartProductCount++;
+    }
+    notifyListeners();
+  }
+
   void addToWishList() {}
 
   Future<void> readFavourite() async {
@@ -40,12 +51,12 @@ class FirebaseProvider with ChangeNotifier {
 
   void deleteFromFavourite() {}
 
-  void plusItem(int productId) {
+  void plusItem() {
     cartProductCount++;
     notifyListeners();
   }
 
-  void minusItem(int productId) {
+  void minusItem() {
     cartProductCount--;
     notifyListeners();
   }

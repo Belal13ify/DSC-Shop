@@ -39,11 +39,11 @@ class CartItem extends StatelessWidget {
               ),
               Image.network(
                 image,
-                width: 60,
+                width: 50,
                 height: 60,
               ),
               SizedBox(
-                width: 10,
+                width: 5,
               ),
               Column(
                 children: [
@@ -60,7 +60,7 @@ class CartItem extends StatelessWidget {
                 ],
               ),
               SizedBox(
-                width: 25,
+                width: 20,
               ),
               Row(
                 children: [

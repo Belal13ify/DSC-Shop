@@ -40,21 +40,16 @@ class SingleProduct extends StatelessWidget {
               ),
               Text(title, style: TextStyle(fontSize: 16)),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 10.0),
-                  child: Text(
-                    "\$$price",
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
-                  ),
+                Text(
+                  "\$$price",
+                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                     onPressed: addToWishlist,
-                    icon: IconButton(
-                        onPressed: () {},
-                        icon: Icon(
-                          Icons.favorite,
-                          size: 25,
-                        )))
+                    icon: Icon(
+                      Icons.favorite,
+                      size: 25,
+                    ))
               ]),
               ElevatedButton(
                   onPressed: addToCart,

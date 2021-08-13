@@ -1,6 +1,6 @@
 import 'package:dsc_shop/models/product_model.dart';
 import 'package:dsc_shop/providers/firebase_provider.dart';
-import 'package:dsc_shop/providers/jsonData_providerd.dart';
+import 'package:dsc_shop/providers/jsonData_provider.dart';
 import 'package:flutter/material.dart';
 import '../widgets/search.dart';
 import 'package:provider/provider.dart';
@@ -24,6 +24,36 @@ class Products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // List<Product> products = [
+    //   Product(
+    //       id: 1,
+    //       title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
+    //       price: 15.99,
+    //       description: "",
+    //       category: "",
+    //       image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
+    //   Product(
+    //       id: 2,
+    //       title: "Test 1",
+    //       price: 15.99,
+    //       description: "",
+    //       category: "",
+    //       image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
+    //   Product(
+    //       id: 3,
+    //       title: "Test 2",
+    //       price: 15.99,
+    //       description: "",
+    //       category: "",
+    //       image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
+    //   Product(
+    //       id: 4,
+    //       title: "Test 3",
+    //       price: 15.99,
+    //       description: "",
+    //       category: "",
+    //       image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg")
+    // ];
     List<Product> products = Provider.of<Data>(context).products;
     return Consumer<FirebaseProvider>(builder: (context, fb, child) {
       return GridView.builder(
@@ -51,7 +81,7 @@ class Products extends StatelessWidget {
               title: title,
               price: price,
               imageSrc: image,
-              addToCart: () => fb.addtoCart(),
+              addToCart: () => fb.addtoCart(productData),
               addToWishlist: () => fb.addToWishList(),
               pressed: () => productInfo(productData.title, description,
                   category, price, image, context));
