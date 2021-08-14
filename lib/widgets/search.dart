@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/jsonData_provider.dart';
+
+TextEditingController searchController = TextEditingController();
 
 class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    TextEditingController searchController = TextEditingController();
+    // TextEditingController searchController = TextEditingController();
+    var search = Provider.of<Data>(context, listen: false);
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: TextField(
           onChanged: (val) {
+            if (val == "") {
+              search.clearSearch();
+            } else {
+              search.search(val);
+            }
+
             // value.search(val);
           },
           controller: searchController,
@@ -23,11 +34,11 @@ class Search extends StatelessWidget {
 
             //triggering the clear icon button in search field to clear the text field and close the search option
             suffixIcon: IconButton(
-              icon: Icon(Icons.close),
+              icon: Icon(Icons.clear),
               onPressed: () {
-                // value.toggleSearch();
-                // textController.text = '';
-                // textController.clear();
+                searchController.text = '';
+                searchController.clear();
+                search.clearSearch();
                 FocusScope.of(context).requestFocus(FocusNode());
               },
             ),

@@ -55,6 +55,9 @@ class Products extends StatelessWidget {
     //       image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg")
     // ];
     List<Product> products = Provider.of<Data>(context, listen: false).products;
+    List<Product> filteredProducts =
+        Provider.of<Data>(context, listen: false).searchedProducts;
+
     return Consumer<FirebaseProvider>(builder: (context, fb, child) {
       return Column(
         children: [
@@ -84,41 +87,72 @@ class Products extends StatelessWidget {
             ),
           ),
           Expanded(
-            child: GridView.builder(
-              padding: EdgeInsets.all(5),
-              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  childAspectRatio: 2 / 3,
-                  crossAxisSpacing: 8,
-                  mainAxisSpacing: 10),
-              itemBuilder: (context, index) {
-                var productData = products[index];
+              child: filteredProducts.isEmpty
+                  ? GridView.builder(
+                      padding: EdgeInsets.all(5),
+                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                          childAspectRatio: 2 / 3,
+                          crossAxisSpacing: 8,
+                          mainAxisSpacing: 10),
+                      itemBuilder: (context, index) {
+                        var productData = products[index];
 
-                String title = productData.title;
-                String description = productData.description;
-                String category = productData.category;
-                num price = productData.price;
-                String image = productData.image;
+                        String title = productData.title;
+                        String description = productData.description;
+                        String category = productData.category;
+                        num price = productData.price;
+                        String image = productData.image;
 
-                if (title.length > 20) {
-                  String strippedtitle = title.substring(0, 20);
-                  title = strippedtitle;
-                }
+                        if (title.length > 20) {
+                          String strippedtitle = title.substring(0, 20);
+                          title = strippedtitle;
+                        }
 
-                return SingleProduct(
-                    title: title,
-                    price: price,
-                    imageSrc: image,
-                    // addToCart: () => fb.addtoCart(productData),
-                    addToCart: () => fb.addItem(productData.id.toString(),
-                        productData.title, productData.price),
-                    addToWishlist: () => fb.addToWishList(),
-                    pressed: () => productInfo(productData.title, description,
-                        category, price, image, context));
-              },
-              itemCount: products.length,
-            ),
-          ),
+                        return SingleProduct(
+                            title: title,
+                            price: price,
+                            imageSrc: image,
+                            // addToCart: () => fb.addtoCart(productData),
+                            addToCart: () => fb.addItem(
+                                productData.id.toString(),
+                                productData.title,
+                                productData.price),
+                            addToWishlist: () => fb.addToWishList(),
+                            pressed: () => productInfo(productData.title,
+                                description, category, price, image, context));
+                      },
+                      itemCount: products.length,
+                    )
+                  : ListView.builder(
+                      itemBuilder: ((context, index) {
+                        var productData = filteredProducts[index];
+
+                        String title = productData.title;
+                        String description = productData.description;
+                        String category = productData.category;
+                        num price = productData.price;
+                        String image = productData.image;
+
+                        if (title.length > 20) {
+                          String strippedtitle = title.substring(0, 20);
+                          title = strippedtitle;
+                        }
+
+                        return SingleProduct(
+                            title: title,
+                            price: price,
+                            imageSrc: image,
+                            // addToCart: () => fb.addtoCart(productData),
+                            addToCart: () => fb.addItem(
+                                productData.id.toString(),
+                                productData.title,
+                                productData.price),
+                            addToWishlist: () => fb.addToWishList(),
+                            pressed: () => productInfo(productData.title,
+                                description, category, price, image, context));
+                      }),
+                      itemCount: filteredProducts.length)),
         ],
       );
     });

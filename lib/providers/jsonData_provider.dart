@@ -5,6 +5,7 @@ import '../models/product_model.dart';
 
 class Data with ChangeNotifier {
   List<Product> products = [];
+  List<Product> searchedProducts = [];
 
   Future<void> getData() async {
     products = [];
@@ -20,6 +21,23 @@ class Data with ChangeNotifier {
       throw Exception("Error");
     }
 
+    notifyListeners();
+  }
+
+  void search(String query) {
+    searchedProducts = products.where((p) {
+      String queryLower = query.toLowerCase();
+      String titleLower = p.title.toLowerCase();
+
+      bool filteredProduct = titleLower.startsWith(queryLower);
+      return filteredProduct;
+    }).toList();
+
+    notifyListeners();
+  }
+
+  void clearSearch() {
+    searchedProducts = [];
     notifyListeners();
   }
 }
