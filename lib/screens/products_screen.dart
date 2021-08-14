@@ -24,36 +24,6 @@ class Products extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // List<Product> products = [
-    //   Product(
-    //       id: 1,
-    //       title: "Fjallraven - Foldsack No. 1 Backpack, Fits 15 Laptops",
-    //       price: 15.99,
-    //       description: "",
-    //       category: "",
-    //       image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
-    //   Product(
-    //       id: 2,
-    //       title: "Test 1",
-    //       price: 15.99,
-    //       description: "",
-    //       category: "",
-    //       image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
-    //   Product(
-    //       id: 3,
-    //       title: "Test 2",
-    //       price: 15.99,
-    //       description: "",
-    //       category: "",
-    //       image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg"),
-    //   Product(
-    //       id: 4,
-    //       title: "Test 3",
-    //       price: 15.99,
-    //       description: "",
-    //       category: "",
-    //       image: "https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg")
-    // ];
     List<Product> products = Provider.of<Data>(context, listen: false).products;
     List<Product> filteredProducts =
         Provider.of<Data>(context, listen: false).searchedProducts;
@@ -73,13 +43,16 @@ class Products extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     CircleAvatar(
-                      radius: 15,
+                      radius: 12,
                       backgroundColor: Colors.red,
-                      child: Text(fb.itemCount.toString()),
+                      child: Text(
+                        fb.itemCount.toString(),
+                        style: TextStyle(color: Colors.white),
+                      ),
                     ),
                     Icon(
                       Icons.shopping_cart,
-                      size: 30,
+                      size: 25,
                     )
                   ],
                 ),
@@ -117,7 +90,8 @@ class Products extends StatelessWidget {
                             addToCart: () => fb.addItem(
                                 productData.id.toString(),
                                 productData.title,
-                                productData.price),
+                                productData.price,
+                                productData.image),
                             addToWishlist: () => fb.addToWishList(),
                             pressed: () => productInfo(productData.title,
                                 description, category, price, image, context));
@@ -147,7 +121,8 @@ class Products extends StatelessWidget {
                             addToCart: () => fb.addItem(
                                 productData.id.toString(),
                                 productData.title,
-                                productData.price),
+                                productData.price,
+                                productData.image),
                             addToWishlist: () => fb.addToWishList(),
                             pressed: () => productInfo(productData.title,
                                 description, category, price, image, context));
