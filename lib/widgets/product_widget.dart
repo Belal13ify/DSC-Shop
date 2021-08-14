@@ -22,6 +22,7 @@ class SingleProduct extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // var fb = Provider.of<FirebaseProvider>(context);
     return GestureDetector(
       onTap: pressed,
       child: Card(
@@ -47,7 +48,9 @@ class SingleProduct extends StatelessWidget {
                 IconButton(
                     onPressed: addToWishlist,
                     icon: Icon(
-                      Icons.favorite,
+                      Icons.favorite_border_outlined,
+                      color: Colors.red,
+                      // product.isFavourite ? Colors.red : Colors.grey[100],
                       size: 25,
                     ))
               ]),

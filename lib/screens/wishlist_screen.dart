@@ -7,8 +7,9 @@ import 'package:provider/provider.dart';
 class Wishlist extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    List<Product> FavProducts =
-        Provider.of<FirebaseProvider>(context).favProducts;
+    // List<Product> FavProducts =
+    //     Provider.of<FirebaseProvider>(context).favProducts;
+    var fb = Provider.of<FirebaseProvider>(context, listen: false);
     List<Product> favouriteProducts = [
       Product(
           id: 1,
@@ -27,19 +28,21 @@ class Wishlist extends StatelessWidget {
     ];
     return ListView.builder(
       itemBuilder: (context, index) {
-        var favProductData = favouriteProducts[index];
-        String title = favProductData.title;
-        if (title.length > 20) {
-          String strippedtitle = title.substring(0, 20);
+        String title = fb.favProducts.values.toList()[index].title;
+        if (title.length > 19) {
+          String strippedtitle = title.substring(0, 15);
           title = strippedtitle;
         }
+
         return FavouriteItem(
-            title: title,
-            price: favProductData.price,
-            image: favProductData.image,
-            deleteFavourite: () {});
+          id: fb.favProducts.values.toList()[index].id,
+          title: title,
+          price: fb.favProducts.values.toList()[index].price,
+          image: fb.favProducts.values.toList()[index].image,
+          deleteFavourite: () => fb.deleteFromFavourite(),
+        );
       },
-      itemCount: 2,
+      itemCount: fb.favProducts.length,
     );
   }
 }

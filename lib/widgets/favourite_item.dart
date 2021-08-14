@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
+// import 'package:provider/provider.dart';
+// import '../providers/firebase_provider.dart';
 
 class FavouriteItem extends StatelessWidget {
+  final String id;
   final String title;
   final num price;
   final String image;
   final VoidCallback deleteFavourite;
 
   FavouriteItem({
+    required this.id,
     required this.title,
     required this.price,
     required this.image,
@@ -15,6 +19,7 @@ class FavouriteItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // var fb = Provider.of<FirebaseProvider>(context);
     return Padding(
       padding: const EdgeInsets.only(bottom: 8.0, left: 7, right: 7),
       child: Card(

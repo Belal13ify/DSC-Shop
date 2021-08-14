@@ -6,7 +6,7 @@ import 'package:provider/provider.dart';
 class ShoppingCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var cart = Provider.of<FirebaseProvider>(context, listen: false);
+    var fb = Provider.of<FirebaseProvider>(context, listen: false);
     return Column(
       children: [
         Padding(
@@ -24,7 +24,7 @@ class ShoppingCart extends StatelessWidget {
                       ),
                       Chip(
                         label: Text(
-                          '\$${cart.totalAmount.toStringAsFixed(2)}',
+                          '\$${fb.totalAmount.toStringAsFixed(2)}',
                           style: TextStyle(color: Colors.white),
                         ),
                         backgroundColor: Colors.purpleAccent,
@@ -41,7 +41,7 @@ class ShoppingCart extends StatelessWidget {
                       radius: 12,
                       backgroundColor: Colors.red,
                       child: Text(
-                        cart.itemCount.toString(),
+                        fb.itemCount.toString(),
                         style: TextStyle(color: Colors.white),
                       ),
                     ),
@@ -58,27 +58,22 @@ class ShoppingCart extends StatelessWidget {
         Expanded(
           child: ListView.builder(
             itemBuilder: (context, index) {
-              // var cartProductData =
-              //     Provider.of<FirebaseProvider>(context).cartProducts[index];
-              // var cartProductData =
-              //     Provider.of<FirebaseProvider>(context).items[index];
-              String title = cart.items.values.toList()[index].title;
+              String title = fb.items.values.toList()[index].title;
               if (title.length > 19) {
                 String strippedtitle = title.substring(0, 15);
                 title = strippedtitle;
               }
-              // int quantity = cart.quantity;
 
               return CartItem(
-                  id: cart.items.values.toList()[index].id,
+                  id: fb.items.values.toList()[index].id,
                   title: title,
-                  quantity: cart.items.values.toList()[index].quantity,
-                  price: cart.items.values.toList()[index].price,
-                  image: cart.items.values.toList()[index].image,
-                  plusItem: () => cart.plusItem((index + 1).toString()),
-                  minusItem: () => cart.minusItem((index + 1).toString()));
+                  quantity: fb.items.values.toList()[index].quantity,
+                  price: fb.items.values.toList()[index].price,
+                  image: fb.items.values.toList()[index].image,
+                  plusItem: () => fb.plusItem((index + 1).toString()),
+                  minusItem: () => fb.minusItem((index + 1).toString()));
             },
-            itemCount: cart.items.length,
+            itemCount: fb.items.length,
           ),
         ),
       ],

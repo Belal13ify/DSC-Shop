@@ -5,6 +5,7 @@ class Product {
   final String description;
   final String category;
   final String image;
+  bool isFavourite;
 
   Product(
       {required this.id,
@@ -12,7 +13,8 @@ class Product {
       required this.price,
       required this.description,
       required this.category,
-      required this.image});
+      required this.image,
+      this.isFavourite = false});
 
   factory Product.fromJson(Map<String, dynamic> parsedJson) {
     return Product(
@@ -22,5 +24,9 @@ class Product {
         description: parsedJson['description'],
         category: parsedJson['category'],
         image: parsedJson['image']);
+  }
+
+  void toggleFavourite() {
+    isFavourite = !isFavourite;
   }
 }

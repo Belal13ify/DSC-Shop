@@ -100,7 +100,11 @@ class Products extends StatelessWidget {
                                 productData.title,
                                 productData.price,
                                 productData.image),
-                            addToWishlist: () => fb.addToWishList(),
+                            addToWishlist: () => fb.addToWishList(
+                                productData.id.toString(),
+                                productData.title,
+                                productData.price,
+                                productData.image),
                             pressed: () => productInfo(productData.title,
                                 description, category, price, image, context));
                       },
@@ -125,13 +129,16 @@ class Products extends StatelessWidget {
                             title: title,
                             price: price,
                             imageSrc: image,
-                            // addToCart: () => fb.addtoCart(productData),
                             addToCart: () => fb.addItem(
                                 productData.id.toString(),
                                 productData.title,
                                 productData.price,
                                 productData.image),
-                            addToWishlist: () => fb.addToWishList(),
+                            addToWishlist: () => fb.addToWishList(
+                                productData.id.toString(),
+                                productData.title,
+                                productData.price,
+                                productData.image),
                             pressed: () => productInfo(productData.title,
                                 description, category, price, image, context));
                       }),
