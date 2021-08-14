@@ -6,6 +6,7 @@ import '../widgets/search.dart';
 import 'package:provider/provider.dart';
 import '../widgets/product_widget.dart';
 import 'product_details.dart';
+import '../providers/navScreenProvider.dart';
 
 class Products extends StatelessWidget {
   void productInfo(String title, String description, String category, num price,
@@ -39,22 +40,29 @@ class Products extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(child: Search()),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    CircleAvatar(
-                      radius: 12,
-                      backgroundColor: Colors.red,
-                      child: Text(
-                        fb.itemCount.toString(),
-                        style: TextStyle(color: Colors.white),
-                      ),
+                GestureDetector(
+                  onTap: () =>
+                      Provider.of<NavigationProvider>(context, listen: false)
+                          .onScreenTaped(2),
+                  child: Container(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        CircleAvatar(
+                          radius: 12,
+                          backgroundColor: Colors.red,
+                          child: Text(
+                            fb.itemCount.toString(),
+                            style: TextStyle(color: Colors.white),
+                          ),
+                        ),
+                        Icon(
+                          Icons.shopping_cart,
+                          size: 25,
+                        )
+                      ],
                     ),
-                    Icon(
-                      Icons.shopping_cart,
-                      size: 25,
-                    )
-                  ],
+                  ),
                 ),
               ],
             ),

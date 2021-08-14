@@ -2,6 +2,8 @@ import 'package:dsc_shop/providers/jsonData_provider.dart';
 import 'package:dsc_shop/providers/navScreenProvider.dart';
 import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:dsc_shop/providers/themeProvider.dart';
+import 'package:dsc_shop/screens/home_screen.dart';
+import 'package:dsc_shop/screens/shoppingCart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'screens/splash_screen.dart';
@@ -38,8 +40,14 @@ class MaterialAppWithTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+        // home: SplashScreen(),
+        initialRoute: '/',
+        routes: {
+          '/': (context) => SplashScreen(),
+          'home': (context) => HomeScreen(),
+          'cart': (context) => ShoppingCart(),
+        },
         debugShowCheckedModeBanner: false,
-        home: SplashScreen(),
         theme: Provider.of<ThemeProvider>(context, listen: false).isActive
             ? Provider.of<ThemeProvider>(context).darkTheme
             : Provider.of<ThemeProvider>(context).lightTheme);

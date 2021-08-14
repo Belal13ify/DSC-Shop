@@ -129,11 +129,7 @@ class Login extends StatelessWidget {
                                   .createUserWithEmailAndPassword(
                                       email: _email, password: _password)
                                   .then((_) => {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HomeScreen()))
+                                        Navigator.of(context).pushNamed('home')
                                       });
                               // openAlert();
                             },
@@ -168,11 +164,7 @@ class Login extends StatelessWidget {
                                   .signInWithEmailAndPassword(
                                       email: _email, password: _password)
                                   .then((_) => {
-                                        Navigator.push(
-                                            context,
-                                            MaterialPageRoute(
-                                                builder: (context) =>
-                                                    HomeScreen()))
+                                        Navigator.of(context).pushNamed('home'),
                                       });
                             },
                             child: Padding(
