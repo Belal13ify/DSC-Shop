@@ -7,6 +7,7 @@ class FavouriteItem extends StatelessWidget {
   final String title;
   final num price;
   final String image;
+  final isFav;
   final VoidCallback deleteFavourite;
 
   FavouriteItem({
@@ -14,6 +15,7 @@ class FavouriteItem extends StatelessWidget {
     required this.title,
     required this.price,
     required this.image,
+    required this.isFav,
     required this.deleteFavourite,
   });
 
@@ -65,10 +67,13 @@ class FavouriteItem extends StatelessWidget {
               Padding(
                 padding: const EdgeInsets.only(bottom: 15.0),
                 child: IconButton(
-                    onPressed: () => deleteFavourite,
+                    onPressed: deleteFavourite,
                     icon: Icon(
-                      Icons.delete,
-                      size: 50,
+                      isFav ? Icons.favorite : Icons.favorite_border_outlined,
+                      color:
+                          // Colors.red,
+                          isFav ? Colors.red : Colors.black,
+                      size: 30,
                     )),
               ),
               SizedBox(

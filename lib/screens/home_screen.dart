@@ -28,12 +28,13 @@ class HomeScreen extends StatelessWidget {
             onTap: () => Provider.of<NavigationProvider>(context, listen: false)
                 .onScreenTaped(2),
             child: Container(
-              padding: EdgeInsets.only(left: 15, right: 15, top: 6),
+              padding: EdgeInsets.only(left: 15, right: 15, top: 7),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 11,
+                    radius: 10,
                     backgroundColor: Colors.red,
                     child: Text(
                       fb.itemCount.toString(),

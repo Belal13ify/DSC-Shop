@@ -50,8 +50,8 @@ class ShoppingCart extends StatelessWidget {
                   quantity: fb.items.values.toList()[index].quantity,
                   price: fb.items.values.toList()[index].price,
                   image: fb.items.values.toList()[index].image,
-                  plusItem: () => fb.plusItem((index + 1).toString()),
-                  minusItem: () => fb.minusItem((index + 1).toString()));
+                  plusItem: () => fb.plusItem(fb.items.keys.toList()[index]),
+                  minusItem: () => fb.minusItem(fb.items.keys.toList()[index]));
             },
             itemCount: fb.items.length,
           ),

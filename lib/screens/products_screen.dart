@@ -65,11 +65,15 @@ class Products extends StatelessWidget {
                           String strippedtitle = title.substring(0, 16);
                           title = strippedtitle;
                         }
-
+                        bool isFavourite = fb.favProducts.containsKey(
+                          productData.id.toString(),
+                        );
+                        // print(productData.id.toString());
                         return SingleProduct(
                             title: title,
                             price: price,
                             imageSrc: image,
+                            isFav: isFavourite,
                             // addToCart: () => fb.addtoCart(productData),
                             addToCart: () => fb.addItem(
                                 productData.id.toString(),
@@ -106,11 +110,14 @@ class Products extends StatelessWidget {
                           String strippedtitle = title.substring(0, 20);
                           title = strippedtitle;
                         }
-
+                        bool isFavourite = fb.favProducts.containsKey(
+                          productData.id.toString(),
+                        );
                         return SingleProduct(
                             title: title,
                             price: price,
                             imageSrc: image,
+                            isFav: isFavourite,
                             addToCart: () => fb.addItem(
                                 productData.id.toString(),
                                 productData.title,

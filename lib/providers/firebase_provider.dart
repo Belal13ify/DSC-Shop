@@ -11,7 +11,7 @@ class FirebaseProvider with ChangeNotifier {
   // List<Product> favProducts = [];
 
   int quantity = 0;
-  bool isFav = false;
+  // bool isFav = false;
 
   Map<String, CartProduct> _items = {};
 
@@ -118,7 +118,10 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteFromFavourite() {}
+  void deleteFromFavourite(String productId) {
+    _favProducts.remove(productId);
+    notifyListeners();
+  }
 
   void plusItem(String productId) {
     // print(productId);

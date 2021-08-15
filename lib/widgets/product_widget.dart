@@ -7,6 +7,7 @@ class SingleProduct extends StatelessWidget {
   final String imageSrc;
   final String descrition;
   final String category;
+  final bool isFav;
   final VoidCallback pressed;
   final VoidCallback addToCart;
   final VoidCallback addToWishlist;
@@ -18,6 +19,7 @@ class SingleProduct extends StatelessWidget {
       required this.pressed,
       this.descrition = "",
       this.category = "",
+      required this.isFav,
       required this.addToCart,
       required this.addToWishlist});
 
@@ -49,9 +51,10 @@ class SingleProduct extends StatelessWidget {
                 IconButton(
                     onPressed: addToWishlist,
                     icon: Icon(
-                      Icons.favorite_border_outlined,
-                      color: Colors.red,
-                      // product.isFavourite ? Colors.red : Colors.grey[100],
+                      isFav ? Icons.favorite : Icons.favorite_border_outlined,
+                      color:
+                          // Colors.red,
+                          isFav ? Colors.red : Colors.black,
                       size: 25,
                     ))
               ]),

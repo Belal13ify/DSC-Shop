@@ -33,13 +33,16 @@ class Wishlist extends StatelessWidget {
           String strippedtitle = title.substring(0, 15);
           title = strippedtitle;
         }
-
+        bool isFavourite =
+            fb.favProducts.containsKey(fb.favProducts.keys.toList()[index]);
         return FavouriteItem(
           id: fb.favProducts.values.toList()[index].id,
           title: title,
           price: fb.favProducts.values.toList()[index].price,
           image: fb.favProducts.values.toList()[index].image,
-          deleteFavourite: () => fb.deleteFromFavourite(),
+          isFav: isFavourite,
+          deleteFavourite: () =>
+              fb.deleteFromFavourite(fb.favProducts.keys.toList()[index]),
         );
       },
       itemCount: fb.favProducts.length,
