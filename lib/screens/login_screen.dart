@@ -39,8 +39,8 @@ class Login extends StatelessWidget {
                 SizedBox(
                   height: 20.0,
                 ),
-                Text('DSC Shop',
-                    textAlign: TextAlign.center,
+                LocaleText('dsc',
+                    // textAlign: TextAlign.center,
                     style: TextStyle(
                         color: Colors.blue,
                         fontSize: 20,

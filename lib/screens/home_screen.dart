@@ -28,7 +28,7 @@ class HomeScreen extends StatelessWidget {
             onTap: () => Provider.of<NavigationProvider>(context, listen: false)
                 .onScreenTaped(2),
             child: Container(
-              padding: EdgeInsets.only(right: 15, top: 6),
+              padding: EdgeInsets.only(left: 15, right: 15, top: 6),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [

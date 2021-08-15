@@ -1,32 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_locales/flutter_locales.dart';
+import 'package:provider/provider.dart';
+import '../providers/dropDown_provider.dart';
 
-class DropDown extends StatefulWidget {
-  @override
-  _DropDownState createState() => _DropDownState();
-}
-
-class _DropDownState extends State<DropDown> {
-  List<String> items = ['ar', 'en'];
-  String? selectedValue = 'en';
-
-  @override
+class DropDown extends StatelessWidget {
   Widget build(BuildContext context) {
+    var dd = Provider.of<DropDownProvider>(context);
+    List<String> languages = dd.languages;
     return DropdownButton<String>(
-        value: selectedValue,
-        onChanged: (String? val) {
-          setState(() {
-            selectedValue = val;
-            LocaleNotifier.of(context)!.change(selectedValue!);
-          });
-        },
-        items: items.map((String item) {
+        value: dd.selectedValue,
+        onChanged: (val) => dd.changeLang(val, context),
+        items: languages.map((String language) {
           return DropdownMenuItem(
             child: Text(
-              item,
+              language,
               style: TextStyle(fontSize: 14),
             ),
-            value: item,
+            value: language,
           );
         }).toList());
   }

@@ -1,3 +1,4 @@
+import 'package:dsc_shop/providers/dropDown_provider.dart';
 import 'package:dsc_shop/providers/jsonData_provider.dart';
 import 'package:dsc_shop/providers/navScreenProvider.dart';
 import 'package:dsc_shop/providers/firebase_provider.dart';
@@ -26,6 +27,8 @@ class MyApp extends StatelessWidget {
       providers: [
         ChangeNotifierProvider<NavigationProvider>(
             create: (context) => NavigationProvider()),
+        ChangeNotifierProvider<DropDownProvider>(
+            create: (context) => DropDownProvider()),
         ChangeNotifierProvider<FirebaseProvider>(
             create: (context) => FirebaseProvider()),
         ChangeNotifierProvider<ThemeProvider>(
