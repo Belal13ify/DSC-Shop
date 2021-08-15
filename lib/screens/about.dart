@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 
 class About extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
-          title: Text("About our DSC Shop APP"),
+          backgroundColor: Colors.transparent,
+          elevation: 0.0,
+          title: LocaleText("appinfo"),
           centerTitle: true,
         ),
         body:
@@ -15,18 +18,18 @@ class About extends StatelessWidget {
           child: ListView(
             children: [
               ListTile(
-                leading: Text(
-                  "App name: ",
+                leading: LocaleText(
+                  "app",
                   style: TextStyle(fontSize: 20),
                 ),
-                trailing: Text(
-                  "DSC Shop",
+                trailing: LocaleText(
+                  "dsc",
                   style: TextStyle(fontSize: 18),
                 ),
               ),
               ListTile(
-                leading: Text(
-                  "Version: ",
+                leading: LocaleText(
+                  "version",
                   style: TextStyle(fontSize: 20),
                 ),
                 trailing: Text(
@@ -35,12 +38,12 @@ class About extends StatelessWidget {
                 ),
               ),
               ListTile(
-                leading: Text(
-                  "Author: ",
+                leading: LocaleText(
+                  "developer",
                   style: TextStyle(fontSize: 20),
                 ),
-                trailing: Text(
-                  "Belal Mohamed El Sharkawy",
+                trailing: LocaleText(
+                  "authorname",
                   style: TextStyle(fontSize: 18),
                 ),
               )

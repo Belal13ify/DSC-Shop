@@ -12,5 +12,10 @@
     "favourite": "Wishlist",
     "cart": "Shopping Cart",
     "search": "Search for a Product",
-    "additem": "ADD TO CART"
+    "additem": "ADD TO CART",
+    "authorname": "Belal Mohamed El Sharkawy",
+    "version": "Version:",
+    "developer": "Author:",
+    "app": "App name:",
+    "appinfo": "About DSC Shop"
 }
