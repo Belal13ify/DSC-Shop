@@ -9,10 +9,12 @@ import 'package:provider/provider.dart';
 import 'screens/splash_screen.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'providers/app_provider.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
+  await Locales.init(['en', 'ar']);
   runApp(MyApp());
 }
 
@@ -39,17 +41,21 @@ class MyApp extends StatelessWidget {
 class MaterialAppWithTheme extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        // home: SplashScreen(),
-        initialRoute: '/',
-        routes: {
-          '/': (context) => SplashScreen(),
-          'home': (context) => HomeScreen(),
-          'cart': (context) => ShoppingCart(),
-        },
-        debugShowCheckedModeBanner: false,
-        theme: Provider.of<ThemeProvider>(context, listen: false).isActive
-            ? Provider.of<ThemeProvider>(context).darkTheme
-            : Provider.of<ThemeProvider>(context).lightTheme);
+    return LocaleBuilder(
+      builder: (locale) => MaterialApp(
+          localizationsDelegates: Locales.delegates,
+          supportedLocales: Locales.supportedLocales,
+          locale: locale,
+          initialRoute: '/',
+          routes: {
+            '/': (context) => SplashScreen(),
+            'home': (context) => HomeScreen(),
+            'cart': (context) => ShoppingCart(),
+          },
+          debugShowCheckedModeBanner: false,
+          theme: Provider.of<ThemeProvider>(context, listen: false).isActive
+              ? Provider.of<ThemeProvider>(context).darkTheme
+              : Provider.of<ThemeProvider>(context).lightTheme),
+    );
   }
 }

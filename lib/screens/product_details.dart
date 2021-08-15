@@ -1,5 +1,6 @@
 import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
 
 class ProductDetails extends StatelessWidget {
@@ -97,8 +98,8 @@ class ProductDetails extends StatelessWidget {
                           Padding(
                             padding: const EdgeInsets.symmetric(
                                 horizontal: 15, vertical: 15),
-                            child: Text(
-                              "ADD TO CART",
+                            child: LocaleText(
+                              "additem",
                               style: TextStyle(
                                   fontSize: 20, fontWeight: FontWeight.bold),
                             ),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 
 class SingleProduct extends StatelessWidget {
   final String title;
@@ -59,8 +60,8 @@ class SingleProduct extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "ADD TO CART",
+                      LocaleText(
+                        "additem",
                         style: TextStyle(
                             fontSize: 16, fontWeight: FontWeight.bold),
                       ),

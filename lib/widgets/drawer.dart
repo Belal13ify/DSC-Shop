@@ -6,6 +6,8 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'dropdown.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 
 class DrawerSection extends StatelessWidget {
   @override
@@ -48,8 +50,8 @@ class DrawerSection extends StatelessWidget {
               ),
             ),
             ListTile(
-              title: Text(
-                'Dark Mode',
+              title: LocaleText(
+                'darkmode',
                 style: TextStyle(fontSize: 18),
               ),
 
@@ -67,20 +69,14 @@ class DrawerSection extends StatelessWidget {
                   }),
             ),
             ListTile(
-              leading: Text(
-                "Languages",
-                style: TextStyle(fontSize: 18),
-              ),
-              trailing: IconButton(
-                  onPressed: () {},
-                  icon: Icon(
-                    Icons.language,
-                    size: 30,
-                  )),
-            ),
+                leading: LocaleText(
+                  "language",
+                  style: TextStyle(fontSize: 18),
+                ),
+                trailing: DropDown()),
             ListTile(
-              leading: Text(
-                "Sign out",
+              leading: LocaleText(
+                "signOut",
                 style: TextStyle(fontSize: 18),
               ),
               trailing: IconButton(
@@ -95,8 +91,8 @@ class DrawerSection extends StatelessWidget {
                   )),
             ),
             ListTile(
-              leading: Text(
-                "About",
+              leading: LocaleText(
+                "about",
                 style: TextStyle(fontSize: 18),
               ),
               trailing: IconButton(

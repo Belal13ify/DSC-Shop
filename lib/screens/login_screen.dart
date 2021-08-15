@@ -5,6 +5,7 @@ import 'package:dsc_shop/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dsc_shop/constants.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
 
 class Login extends StatelessWidget {
@@ -23,7 +24,7 @@ class Login extends StatelessWidget {
           child: Form(
         key: _formKey,
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
+          padding: const EdgeInsets.symmetric(horizontal: 25),
           child: SingleChildScrollView(
             child: Column(
               // mainAxisAlignment: MainAxisAlignment.center,
@@ -109,14 +110,14 @@ class Login extends StatelessWidget {
                       height: 40,
                     ),
                     Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                       children: [
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
                               shape: StadiumBorder(),
                               primary: Colors.orange,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 12),
+                                  horizontal: 10, vertical: 12),
                             ),
                             onPressed: () {
                               if (!_formKey.currentState!.validate()) {
@@ -135,10 +136,10 @@ class Login extends StatelessWidget {
                             },
                             child: Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(
-                                'Sign Up',
-                                style: TextStyle(fontSize: 20),
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: LocaleText(
+                                'signUp',
+                                style: TextStyle(fontSize: 18),
                               ),
                             )),
                         ElevatedButton(
@@ -169,10 +170,10 @@ class Login extends StatelessWidget {
                             },
                             child: Padding(
                               padding:
-                                  const EdgeInsets.symmetric(horizontal: 20),
-                              child: Text(
-                                'Login',
-                                style: TextStyle(fontSize: 20),
+                                  const EdgeInsets.symmetric(horizontal: 5),
+                              child: LocaleText(
+                                'login',
+                                style: TextStyle(fontSize: 18),
                               ),
                             ))
                       ],

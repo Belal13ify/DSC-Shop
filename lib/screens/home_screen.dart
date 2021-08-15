@@ -7,6 +7,7 @@ import 'package:dsc_shop/screens/wishlist_screen.dart';
 import 'package:dsc_shop/widgets/botom_navigation.dart';
 import 'package:dsc_shop/widgets/drawer.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 import 'package:provider/provider.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -21,7 +22,7 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0.0,
         centerTitle: true,
-        title: Text("DSC Shop"),
+        title: LocaleText("dsc"),
         actions: [
           GestureDetector(
             onTap: () => Provider.of<NavigationProvider>(context, listen: false)
