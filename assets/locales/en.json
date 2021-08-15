@@ -17,5 +17,8 @@
     "version": "Version:",
     "developer": "Author:",
     "app": "App name:",
-    "appinfo": "About DSC Shop"
+    "appinfo": "About DSC Shop",
+    "describe": "Description",
+    "category": "Category",
+    "price": "Price"
 }

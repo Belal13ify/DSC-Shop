@@ -50,11 +50,15 @@ class ProductDetails extends StatelessWidget {
               SizedBox(
                 height: 10,
               ),
-              Text('Category',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              Align(
+                alignment: Alignment.center,
+                child: LocaleText('category',
+                    // textAlign: TextAlign.center,
+                    style:
+                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+              ),
               SizedBox(
-                height: 5,
+                height: 1,
               ),
               Text(
                 "$category",
@@ -65,15 +69,25 @@ class ProductDetails extends StatelessWidget {
                 height: 20,
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                Text(
-                  "Price:\t\t\$$price",
-                  style: TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                Row(
+                  children: [
+                    LocaleText(
+                      "price",
+                      style:
+                          TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                    ),
+                    Text(
+                      ':\t\t\$$price',
+                      style:
+                          TextStyle(fontSize: 23, fontWeight: FontWeight.bold),
+                    )
+                  ],
                 ),
                 SizedBox(
                   height: 10,
                 ),
-                Text(
-                  "Description",
+                LocaleText(
+                  "describe",
                   style: TextStyle(fontSize: 19, fontWeight: FontWeight.bold),
                 ),
                 SizedBox(
