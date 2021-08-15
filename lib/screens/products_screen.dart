@@ -6,15 +6,15 @@ import '../widgets/search.dart';
 import 'package:provider/provider.dart';
 import '../widgets/product_widget.dart';
 import 'product_details.dart';
-import '../providers/navScreenProvider.dart';
 
 class Products extends StatelessWidget {
-  void productInfo(String title, String description, String category, num price,
-      String image, context) {
+  void productInfo(String id, String title, String description, String category,
+      num price, String image, context) {
     Navigator.push(
         context,
         MaterialPageRoute(
             builder: (context) => ProductDetails(
+                  id: id,
                   title: title,
                   description: description,
                   category: category,
@@ -40,30 +40,6 @@ class Products extends StatelessWidget {
             child: Row(
               children: [
                 Expanded(child: Search()),
-                GestureDetector(
-                  onTap: () =>
-                      Provider.of<NavigationProvider>(context, listen: false)
-                          .onScreenTaped(2),
-                  child: Container(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        CircleAvatar(
-                          radius: 12,
-                          backgroundColor: Colors.red,
-                          child: Text(
-                            fb.itemCount.toString(),
-                            style: TextStyle(color: Colors.white),
-                          ),
-                        ),
-                        Icon(
-                          Icons.shopping_cart,
-                          size: 25,
-                        )
-                      ],
-                    ),
-                  ),
-                ),
               ],
             ),
           ),
@@ -105,8 +81,14 @@ class Products extends StatelessWidget {
                                 productData.title,
                                 productData.price,
                                 productData.image),
-                            pressed: () => productInfo(productData.title,
-                                description, category, price, image, context));
+                            pressed: () => productInfo(
+                                productData.id.toString(),
+                                productData.title,
+                                description,
+                                category,
+                                price,
+                                image,
+                                context));
                       },
                       itemCount: products.length,
                     )
@@ -139,8 +121,14 @@ class Products extends StatelessWidget {
                                 productData.title,
                                 productData.price,
                                 productData.image),
-                            pressed: () => productInfo(productData.title,
-                                description, category, price, image, context));
+                            pressed: () => productInfo(
+                                productData.id.toString(),
+                                productData.title,
+                                description,
+                                category,
+                                price,
+                                image,
+                                context));
                       }),
                       itemCount: filteredProducts.length)),
         ],

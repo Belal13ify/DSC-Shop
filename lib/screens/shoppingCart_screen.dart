@@ -32,26 +32,6 @@ class ShoppingCart extends StatelessWidget {
                     ],
                   ),
                   alignment: Alignment.center),
-              Align(
-                alignment: Alignment.topRight,
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    CircleAvatar(
-                      radius: 12,
-                      backgroundColor: Colors.red,
-                      child: Text(
-                        fb.itemCount.toString(),
-                        style: TextStyle(color: Colors.white),
-                      ),
-                    ),
-                    Icon(
-                      Icons.shopping_cart,
-                      size: 25,
-                    )
-                  ],
-                ),
-              ),
             ],
           ),
         ),

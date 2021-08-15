@@ -1,6 +1,9 @@
+import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetails extends StatelessWidget {
+  final String id;
   final String title;
   final String description;
   final String category;
@@ -8,7 +11,8 @@ class ProductDetails extends StatelessWidget {
   final String image;
 
   ProductDetails(
-      {required this.title,
+      {required this.id,
+      required this.title,
       required this.description,
       required this.category,
       required this.price,
@@ -16,6 +20,7 @@ class ProductDetails extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var fb = Provider.of<FirebaseProvider>(context);
     return Scaffold(
         appBar: AppBar(
           title: Text(title),
@@ -83,7 +88,9 @@ class ProductDetails extends StatelessWidget {
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 0),
                   child: ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        fb.addItem(id.toString(), title, price, image);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [

@@ -1,3 +1,4 @@
+import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:dsc_shop/providers/navScreenProvider.dart';
 import 'package:dsc_shop/providers/themeProvider.dart';
 import 'package:dsc_shop/screens/products_screen.dart';
@@ -12,6 +13,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Provider.of<ThemeProvider>(context).checkDarkMode();
+    var nav = Provider.of<NavigationProvider>(context);
+    var fb = Provider.of<FirebaseProvider>(context);
     List<Widget> selectedScreen = [Products(), Wishlist(), ShoppingCart()];
     return Scaffold(
       appBar: AppBar(
@@ -19,10 +22,34 @@ class HomeScreen extends StatelessWidget {
         elevation: 0.0,
         centerTitle: true,
         title: Text("DSC Shop"),
+        actions: [
+          GestureDetector(
+            onTap: () => Provider.of<NavigationProvider>(context, listen: false)
+                .onScreenTaped(2),
+            child: Container(
+              padding: EdgeInsets.only(right: 15, top: 6),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: [
+                  CircleAvatar(
+                    radius: 11,
+                    backgroundColor: Colors.red,
+                    child: Text(
+                      fb.itemCount.toString(),
+                      style: TextStyle(color: Colors.white),
+                    ),
+                  ),
+                  Icon(
+                    Icons.shopping_cart,
+                    size: 25,
+                  )
+                ],
+              ),
+            ),
+          )
+        ],
       ),
-      body: SafeArea(
-          child: selectedScreen[
-              Provider.of<NavigationProvider>(context).selectedScreen]),
+      body: SafeArea(child: selectedScreen[nav.selectedScreen]),
       drawer: DrawerSection(),
       bottomNavigationBar: BottomNavBar(),
     );
