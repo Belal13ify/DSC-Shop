@@ -49,9 +49,9 @@ class Products extends StatelessWidget {
                       padding: EdgeInsets.all(5),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 2 / 3,
+                          childAspectRatio: 5 / 6,
                           crossAxisSpacing: 8,
-                          mainAxisSpacing: 10),
+                          mainAxisSpacing: 5),
                       itemBuilder: (context, index) {
                         var productData = products[index];
 
@@ -61,8 +61,8 @@ class Products extends StatelessWidget {
                         num price = productData.price;
                         String image = productData.image;
 
-                        if (title.length > 20) {
-                          String strippedtitle = title.substring(0, 20);
+                        if (title.length > 19) {
+                          String strippedtitle = title.substring(0, 16);
                           title = strippedtitle;
                         }
 
