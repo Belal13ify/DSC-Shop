@@ -45,13 +45,15 @@ class ShoppingCart extends StatelessWidget {
               }
 
               return CartItem(
-                  id: fb.items.values.toList()[index].id,
-                  title: title,
-                  quantity: fb.items.values.toList()[index].quantity,
-                  price: fb.items.values.toList()[index].price,
-                  image: fb.items.values.toList()[index].image,
-                  plusItem: () => fb.plusItem(fb.items.keys.toList()[index]),
-                  minusItem: () => fb.minusItem(fb.items.keys.toList()[index]));
+                id: fb.items.values.toList()[index].id,
+                title: title,
+                quantity: fb.items.values.toList()[index].quantity,
+                price: fb.items.values.toList()[index].price,
+                image: fb.items.values.toList()[index].image,
+                plusItem: () => fb.plusItem(fb.items.keys.toList()[index]),
+                minusItem: () => fb.minusItem(fb.items.keys.toList()[index]),
+                productKey: fb.items.keys.toList()[index],
+              );
             },
             itemCount: fb.items.length,
           ),

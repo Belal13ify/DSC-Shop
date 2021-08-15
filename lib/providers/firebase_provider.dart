@@ -84,11 +84,11 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  bool checkFavouriteProduct(String productKey) {
-    // print(productKey);
-    // print(_favProducts.values.map((e) => print(e)));
-    return _favProducts.containsKey(productKey) ? true : false;
-  }
+  // bool checkFavouriteProduct(String productKey) {
+  //   // print(productKey);
+  //   // print(_favProducts.values.map((e) => print(e)));
+  //   return _favProducts.containsKey(productKey) ? true : false;
+  // }
   // void checkFavourite(String favouriteKey) {
   //   bool isFavourite = _favProducts.containsKey(favouriteKey);
   //   if (isFavourite) {
@@ -121,6 +121,13 @@ class FirebaseProvider with ChangeNotifier {
   void deleteFromFavourite(String productId) {
     _favProducts.remove(productId);
     notifyListeners();
+  }
+
+  void deleteFromCart(productKey) {
+    {
+      _items.remove(productKey);
+      notifyListeners();
+    }
   }
 
   void plusItem(String productId) {
