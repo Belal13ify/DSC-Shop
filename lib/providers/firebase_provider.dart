@@ -1,11 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsc_shop/models/favourite.dart';
-import 'package:dsc_shop/models/product_model.dart';
-import 'package:dsc_shop/widgets/cart_item.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../models/cart.dart';
 import 'package:flutter/material.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseProvider with ChangeNotifier {
   late FirebaseFirestore firestore;
@@ -31,29 +28,31 @@ class FirebaseProvider with ChangeNotifier {
   }
 
   void signUp(String email, String password, context) {
+    _items = {};
+    _favProducts = {};
     initialize();
     auth
         .createUserWithEmailAndPassword(email: email, password: password)
-        .then((_) => userSetup("blah, blah"))
-        .then((_) => {Navigator.of(context).pushNamed('home')})
-        .then((_) => readCartItems());
-    // readCartItems();
+        .then((_) => userSetup(email))
+        .then((_) => readFavourites())
+        .then((_) => readCartItems()
+            .then((_) => {Navigator.of(context).pushNamed('home')}));
     notifyListeners();
   }
 
   void login(String email, String password, context) {
+    _items = {};
+    _favProducts = {};
     initialize();
     auth
         .signInWithEmailAndPassword(email: email, password: password)
-        .then((_) => userSetup("blah, blah"))
-        .then((_) => {Navigator.of(context).pushNamed('home')})
-        .then((_) => readCartItems());
-    // userSetup("blah, blah");
-    // readCartItems();
+        .then((_) => userSetup(email))
+        .then((_) => readFavourites())
+        .then((_) => readCartItems()
+            .then((_) => {Navigator.of(context).pushNamed('home')}));
     notifyListeners();
   }
 
-  int quantity = 0;
   Map<String, CartProduct> _items = {};
 
   Map<String, CartProduct> get items {
@@ -80,6 +79,12 @@ class FirebaseProvider with ChangeNotifier {
   Future<void> addItem(
       String productId, String title, num price, String image) async {
     uid = FirebaseAuth.instance.currentUser!.uid;
+
+    querySnapshot = await firestore
+        .collection('Users')
+        .doc(uid)
+        .collection('cart products')
+        .get();
     if (_items.containsKey(productId)) {
       //change quanity
       _items.update(
@@ -90,6 +95,14 @@ class FirebaseProvider with ChangeNotifier {
               quantity: existingCartItem.quantity + 1,
               price: existingCartItem.price,
               image: existingCartItem.image));
+      firestore
+          .collection('Users')
+          .doc(uid)
+          .collection('cart products')
+          .doc(productId)
+          .update({
+        'quantity': FieldValue.increment(1),
+      });
     } else {
       _items.putIfAbsent(
           productId,
@@ -104,7 +117,8 @@ class FirebaseProvider with ChangeNotifier {
           .collection('Users')
           .doc(uid)
           .collection('cart products')
-          .add({
+          .doc(productId)
+          .set({
         'id': productId,
         'title': title,
         'price': price,
@@ -115,9 +129,16 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void addToWishList(String productId, String title, num price, String image) {
+  Future<void> addToWishList(
+      String productId, String title, num price, String image) async {
     if (_favProducts.containsKey(productId)) {
       _favProducts.remove(productId);
+      firestore
+          .collection('Users')
+          .doc(uid)
+          .collection('favourite products')
+          .doc(productId)
+          .delete();
     } else {
       _favProducts.putIfAbsent(
           productId,
@@ -126,12 +147,22 @@ class FirebaseProvider with ChangeNotifier {
               title: title,
               price: price,
               image: image));
+      await firestore
+          .collection('Users')
+          .doc(uid)
+          .collection('favourite products')
+          .doc(productId)
+          .set({
+        'id': productId,
+        'title': title,
+        'price': price,
+        'image': image
+      });
     }
     notifyListeners();
   }
 
   Future<void> readCartItems() async {
-    _items = {};
     try {
       querySnapshot = await firestore
           .collection('Users')
@@ -140,7 +171,6 @@ class FirebaseProvider with ChangeNotifier {
           .get();
       if (querySnapshot.docs.isNotEmpty) {
         for (var doc in querySnapshot.docs) {
-          // print(querySnapshot.docs.length);
           var cartItem = CartProduct(
             id: doc['id'],
             title: doc['title'],
@@ -149,11 +179,33 @@ class FirebaseProvider with ChangeNotifier {
             image: doc['image'],
           );
 
-          _items.putIfAbsent(doc['id'],
-              () => cartItem); //here is the issue of reading >> fixed
+          _items.putIfAbsent(doc.id, () => cartItem);
         }
-      } else {
-        return;
+      }
+    } catch (e) {
+      print(e);
+    }
+    // notifyListeners();
+  }
+
+  Future<void> readFavourites() async {
+    try {
+      querySnapshot = await firestore
+          .collection('Users')
+          .doc(uid)
+          .collection('favourite products')
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        for (var doc in querySnapshot.docs) {
+          var favouriteProduct = FavouriteProduct(
+            id: doc['id'],
+            title: doc['title'],
+            price: doc['price'],
+            image: doc['image'],
+          );
+
+          _favProducts.putIfAbsent(doc.id, () => favouriteProduct);
+        }
       }
     } catch (e) {
       print(e);
@@ -163,19 +215,28 @@ class FirebaseProvider with ChangeNotifier {
 
   void deleteFromFavourite(String productId) {
     _favProducts.remove(productId);
+    firestore
+        .collection('Users')
+        .doc(uid)
+        .collection('favourite products')
+        .doc(productId)
+        .delete();
     notifyListeners();
   }
 
-  void deleteFromCart(productKey) {
-    {
-      _items.remove(productKey);
-      notifyListeners();
-    }
+  void deleteFromCart(productId) async {
+    _items.remove(productId);
+    firestore
+        .collection('Users')
+        .doc(uid)
+        .collection('cart products')
+        .doc(productId)
+        .delete();
+    notifyListeners();
   }
 
   void plusItem(String productId) {
-    // print(productId);
-    // print(_items);
+    print(productId);
     _items.update(
         productId,
         (existingCartItem) => CartProduct(
@@ -185,12 +246,19 @@ class FirebaseProvider with ChangeNotifier {
             price: existingCartItem.price,
             image: existingCartItem.image));
 
+    firestore
+        .collection('Users')
+        .doc(uid)
+        .collection('cart products')
+        .doc(productId)
+        .update({
+      'quantity': FieldValue.increment(1),
+    });
+
     notifyListeners();
   }
 
   void minusItem(String productId) {
-    // print(productId);
-    // print(_items);
     _items.update(
         productId,
         (existingCartItem) => CartProduct(
@@ -201,6 +269,15 @@ class FirebaseProvider with ChangeNotifier {
                 : existingCartItem.quantity - 1,
             price: existingCartItem.price,
             image: existingCartItem.image));
+
+    firestore
+        .collection('Users')
+        .doc(uid)
+        .collection('cart products')
+        .doc(productId)
+        .update({
+      'quantity': FieldValue.increment(-1),
+    });
 
     notifyListeners();
   }
