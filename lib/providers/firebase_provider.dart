@@ -34,9 +34,10 @@ class FirebaseProvider with ChangeNotifier {
     initialize();
     auth
         .createUserWithEmailAndPassword(email: email, password: password)
-        .then((_) => {Navigator.of(context).pushNamed('home')});
-    userSetup("blah, blah");
-    readCartItems();
+        .then((_) => userSetup("blah, blah"))
+        .then((_) => {Navigator.of(context).pushNamed('home')})
+        .then((_) => readCartItems());
+    // readCartItems();
     notifyListeners();
   }
 
@@ -44,9 +45,11 @@ class FirebaseProvider with ChangeNotifier {
     initialize();
     auth
         .signInWithEmailAndPassword(email: email, password: password)
-        .then((_) => {Navigator.of(context).pushNamed('home')});
-    userSetup("blah, blah");
-    readCartItems();
+        .then((_) => userSetup("blah, blah"))
+        .then((_) => {Navigator.of(context).pushNamed('home')})
+        .then((_) => readCartItems());
+    // userSetup("blah, blah");
+    // readCartItems();
     notifyListeners();
   }
 
@@ -128,6 +131,7 @@ class FirebaseProvider with ChangeNotifier {
   }
 
   Future<void> readCartItems() async {
+    _items = {};
     try {
       querySnapshot = await firestore
           .collection('Users')
@@ -136,7 +140,7 @@ class FirebaseProvider with ChangeNotifier {
           .get();
       if (querySnapshot.docs.isNotEmpty) {
         for (var doc in querySnapshot.docs) {
-          print(querySnapshot.docs.length);
+          // print(querySnapshot.docs.length);
           var cartItem = CartProduct(
             id: doc['id'],
             title: doc['title'],
@@ -144,6 +148,7 @@ class FirebaseProvider with ChangeNotifier {
             quantity: doc['quantity'],
             image: doc['image'],
           );
+
           _items.putIfAbsent(doc['id'],
               () => cartItem); //here is the issue of reading >> fixed
         }
@@ -154,28 +159,6 @@ class FirebaseProvider with ChangeNotifier {
       print(e);
     }
     // notifyListeners();
-  }
-
-  Future<void> readFavourite() async {
-    QuerySnapshot querySnapshot;
-    try {
-      querySnapshot = await firestore.collection('favourite products').get();
-      if (querySnapshot.docs.isNotEmpty) {
-        for (var doc in querySnapshot.docs) {
-          var product = Product(
-              id: 0,
-              title: doc['title'],
-              price: doc['price'],
-              description: "",
-              category: "",
-              image: doc['image']);
-          // favProducts.add(product);
-        }
-      }
-    } catch (e) {
-      print(e);
-    }
-    notifyListeners();
   }
 
   void deleteFromFavourite(String productId) {
