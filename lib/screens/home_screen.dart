@@ -16,6 +16,8 @@ class HomeScreen extends StatelessWidget {
     Provider.of<ThemeProvider>(context).checkDarkMode();
     var nav = Provider.of<NavigationProvider>(context);
     var fb = Provider.of<FirebaseProvider>(context);
+    // fb.initialize();
+    // fb.readCartItems();
     List<Widget> selectedScreen = [Products(), Wishlist(), ShoppingCart()];
     return Scaffold(
       appBar: AppBar(

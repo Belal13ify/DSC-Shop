@@ -8,10 +8,12 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'dropdown.dart';
 import 'package:flutter_locales/flutter_locales.dart';
+import '../providers/firebase_provider.dart';
 
 class DrawerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var fb = Provider.of<FirebaseProvider>(context);
     return Drawer(
       child: Material(
         child: ListView(
@@ -30,12 +32,12 @@ class DrawerSection extends StatelessWidget {
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("Belal Mohamed "),
+                      Text("Belal Mohamed"),
                       SizedBox(
                         height: 15,
                       ),
                       Text(
-                        "belal_ph13@yahoo.com",
+                        fb.userEmail,
                         style: TextStyle(fontSize: 12),
                       )
                     ],

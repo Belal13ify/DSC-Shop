@@ -2,17 +2,55 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsc_shop/models/favourite.dart';
 import 'package:dsc_shop/models/product_model.dart';
 import 'package:dsc_shop/widgets/cart_item.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import '../models/cart.dart';
 import 'package:flutter/material.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class FirebaseProvider with ChangeNotifier {
-  // List<Product> cartProducts = [];
-  // List<Product> favProducts = [];
+  late FirebaseFirestore firestore;
+  final auth = FirebaseAuth.instance;
+  late QuerySnapshot querySnapshot;
+  // String name = "";
+  String userEmail = "";
+  String token = "";
+  late String uid;
+  String users = 'Users';
+  // CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
+  void initialize() {
+    firestore = FirebaseFirestore.instance;
+    notifyListeners();
+  }
+
+  Future<void> userSetup(String email) async {
+    userEmail = email;
+    // CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    uid = auth.currentUser!.uid; // here to fix the null checking issue
+    // await users.add({'email': email, 'uid': uid});
+  }
+
+  void signUp(String email, String password, context) {
+    initialize();
+    auth
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((_) => {Navigator.of(context).pushNamed('home')});
+    userSetup("blah, blah");
+    readCartItems();
+    notifyListeners();
+  }
+
+  void login(String email, String password, context) {
+    initialize();
+    auth
+        .signInWithEmailAndPassword(email: email, password: password)
+        .then((_) => {Navigator.of(context).pushNamed('home')});
+    userSetup("blah, blah");
+    readCartItems();
+    notifyListeners();
+  }
 
   int quantity = 0;
-  // bool isFav = false;
-
   Map<String, CartProduct> _items = {};
 
   Map<String, CartProduct> get items {
@@ -36,7 +74,9 @@ class FirebaseProvider with ChangeNotifier {
     return total;
   }
 
-  void addItem(String productId, String title, num price, String image) {
+  Future<void> addItem(
+      String productId, String title, num price, String image) async {
+    uid = FirebaseAuth.instance.currentUser!.uid;
     if (_items.containsKey(productId)) {
       //change quanity
       _items.update(
@@ -56,23 +96,26 @@ class FirebaseProvider with ChangeNotifier {
               quantity: 1,
               price: price,
               image: image));
+      // await firestore.collection('Users').doc(uid).set(data);
+      await firestore
+          .collection('Users')
+          .doc(uid)
+          .collection('cart products')
+          .add({
+        'id': productId,
+        'title': title,
+        'price': price,
+        'quantity': 1,
+        'image': image
+      });
     }
     notifyListeners();
-  }
-
-  late FirebaseFirestore firestore;
-
-  late QuerySnapshot querySnapshot;
-  initialize() {
-    firestore = FirebaseFirestore.instance;
   }
 
   void addToWishList(String productId, String title, num price, String image) {
     if (_favProducts.containsKey(productId)) {
       _favProducts.remove(productId);
-      // isFav = false;
     } else {
-      // isFav = true;
       _favProducts.putIfAbsent(
           productId,
           () => FavouriteProduct(
@@ -84,20 +127,37 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // bool checkFavouriteProduct(String productKey) {
-  //   // print(productKey);
-  //   // print(_favProducts.values.map((e) => print(e)));
-  //   return _favProducts.containsKey(productKey) ? true : false;
-  // }
-  // void checkFavourite(String favouriteKey) {
-  //   bool isFavourite = _favProducts.containsKey(favouriteKey);
-  //   if (isFavourite) {
-  //     _favProducts.remove(favouriteKey);
-  //   }else{
-  //   }
-  // }
+  Future<void> readCartItems() async {
+    try {
+      querySnapshot = await firestore
+          .collection('Users')
+          .doc(uid)
+          .collection('cart products')
+          .get();
+      if (querySnapshot.docs.isNotEmpty) {
+        for (var doc in querySnapshot.docs) {
+          print(querySnapshot.docs.length);
+          var cartItem = CartProduct(
+            id: doc['id'],
+            title: doc['title'],
+            price: doc['price'],
+            quantity: doc['quantity'],
+            image: doc['image'],
+          );
+          _items.putIfAbsent(doc['id'],
+              () => cartItem); //here is the issue of reading >> fixed
+        }
+      } else {
+        return;
+      }
+    } catch (e) {
+      print(e);
+    }
+    // notifyListeners();
+  }
 
   Future<void> readFavourite() async {
+    QuerySnapshot querySnapshot;
     try {
       querySnapshot = await firestore.collection('favourite products').get();
       if (querySnapshot.docs.isNotEmpty) {

@@ -23,7 +23,7 @@ class CartItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var cart = Provider.of<FirebaseProvider>(context);
+    var cart = Provider.of<FirebaseProvider>(context, listen: false);
     return Dismissible(
       onDismissed: (direction) {
         cart.deleteFromCart(productKey);

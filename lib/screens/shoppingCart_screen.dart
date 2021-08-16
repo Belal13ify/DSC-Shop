@@ -7,6 +7,8 @@ class ShoppingCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var fb = Provider.of<FirebaseProvider>(context, listen: false);
+    // fb.initialize();
+
     return Column(
       children: [
         Padding(

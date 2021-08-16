@@ -1,7 +1,6 @@
-import 'package:dsc_shop/models/product_model.dart';
 import 'package:dsc_shop/providers/app_provider.dart';
+import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:dsc_shop/providers/jsonData_provider.dart';
-import 'package:dsc_shop/screens/home_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dsc_shop/constants.dart';
@@ -11,10 +10,12 @@ import 'package:provider/provider.dart';
 class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final auth = FirebaseAuth.instance;
+    final auth = Provider.of<FirebaseProvider>(context);
+    // auth.initialize();
+    final data = Provider.of<Data>(context);
     String _email = "";
     String _password = "";
-    List<Product> products = [];
+
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     final _formKey = GlobalKey<FormState>();
@@ -119,20 +120,16 @@ class Login extends StatelessWidget {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 12),
                             ),
-                            onPressed: () {
+                            onPressed: () async {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               }
+                              await data.getData();
                               _email = emailController.text;
                               _password = passwordController.text;
 
-                              auth
-                                  .createUserWithEmailAndPassword(
-                                      email: _email, password: _password)
-                                  .then((_) => {
-                                        Navigator.of(context).pushNamed('home')
-                                      });
-                              // openAlert();
+                              auth.signUp(_email, _password, context);
+                              // auth.userSetup(_email);
                             },
                             child: Padding(
                               padding:
@@ -156,17 +153,9 @@ class Login extends StatelessWidget {
                               // openAlert();
                               _email = emailController.text;
                               _password = passwordController.text;
-                              await Provider.of<Data>(context, listen: false)
-                                  .getData();
-                              products =
-                                  Provider.of<Data>(context, listen: false)
-                                      .products;
-                              auth
-                                  .signInWithEmailAndPassword(
-                                      email: _email, password: _password)
-                                  .then((_) => {
-                                        Navigator.of(context).pushNamed('home'),
-                                      });
+                              await data.getData();
+                              auth.login(_email, _password, context);
+                              // auth.userSetup(_email);
                             },
                             child: Padding(
                               padding:
