@@ -4,6 +4,8 @@ import 'package:dsc_shop/providers/navScreenProvider.dart';
 import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:dsc_shop/providers/themeProvider.dart';
 import 'package:dsc_shop/screens/home_screen.dart';
+import 'package:dsc_shop/screens/login_screen.dart';
+import 'package:dsc_shop/screens/register_screen.dart';
 import 'package:dsc_shop/screens/shoppingCart_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -54,6 +56,8 @@ class MaterialAppWithTheme extends StatelessWidget {
             '/': (context) => SplashScreen(),
             'home': (context) => HomeScreen(),
             'cart': (context) => ShoppingCart(),
+            'login': (context) => Login(),
+            'signup': (context) => Register(),
           },
           debugShowCheckedModeBanner: false,
           theme: Provider.of<ThemeProvider>(context, listen: false).isActive

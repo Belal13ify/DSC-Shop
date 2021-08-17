@@ -120,16 +120,8 @@ class Login extends StatelessWidget {
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 12),
                             ),
-                            onPressed: () async {
-                              if (!_formKey.currentState!.validate()) {
-                                return;
-                              }
-                              await data.getData();
-                              _email = emailController.text;
-                              _password = passwordController.text;
-
-                              auth.signUp(_email, _password, context);
-                              // auth.userSetup(_email);
+                            onPressed: () {
+                              Navigator.of(context).pushNamed('signup');
                             },
                             child: Padding(
                               padding:
@@ -154,7 +146,8 @@ class Login extends StatelessWidget {
                               _email = emailController.text;
                               _password = passwordController.text;
                               await data.getData();
-                              auth.login(_email, _password, context);
+                              auth.login(
+                                  "Johm Doe", _email, _password, context);
                               // auth.userSetup(_email);
                             },
                             child: Padding(

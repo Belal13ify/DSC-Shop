@@ -22,23 +22,26 @@ class DrawerSection extends StatelessWidget {
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  CircleAvatar(
-                    radius: 35,
-                    child: Image.asset(
-                      'assets/images/logo.png',
-                      // width: 70,
-                    ),
-                  ),
                   Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text("Belal Mohamed"),
+                      CircleAvatar(
+                        radius: 37,
+                        child: Image.asset(
+                          'assets/images/logo.png',
+                          // width: 70,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 8,
+                      ),
+                      Text(fb.username),
                       SizedBox(
                         height: 15,
                       ),
                       Text(
                         fb.userEmail,
-                        style: TextStyle(fontSize: 12),
+                        style: TextStyle(fontSize: 15),
                       )
                     ],
                   ),

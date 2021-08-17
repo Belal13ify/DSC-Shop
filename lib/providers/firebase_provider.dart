@@ -8,11 +8,11 @@ class FirebaseProvider with ChangeNotifier {
   late FirebaseFirestore firestore;
   final auth = FirebaseAuth.instance;
   late QuerySnapshot querySnapshot;
-  // String name = "";
+  String username = "";
   String userEmail = "";
   String token = "";
   late String uid;
-  String users = 'Users';
+  // String users = 'Users';
   // CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
   void initialize() {
@@ -20,33 +20,34 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> userSetup(String email) async {
+  Future<void> userSetup(String username, String email) async {
     userEmail = email;
     // CollectionReference users = FirebaseFirestore.instance.collection('Users');
     uid = auth.currentUser!.uid; // here to fix the null checking issue
-    // await users.add({'email': email, 'uid': uid});
+    // await users.add({'usernasme': username,'email': email, 'uid': uid});
   }
 
-  void signUp(String email, String password, context) {
+  void signUp(String name, String email, String password, context) {
+    username = name;
     _items = {};
     _favProducts = {};
     initialize();
     auth
         .createUserWithEmailAndPassword(email: email, password: password)
-        .then((_) => userSetup(email))
+        .then((_) => userSetup(name, email))
         .then((_) => readFavourites())
         .then((_) => readCartItems()
             .then((_) => {Navigator.of(context).pushNamed('home')}));
     notifyListeners();
   }
 
-  void login(String email, String password, context) {
+  void login(String name, String email, String password, context) {
     _items = {};
     _favProducts = {};
     initialize();
     auth
         .signInWithEmailAndPassword(email: email, password: password)
-        .then((_) => userSetup(email))
+        .then((_) => userSetup(name, email))
         .then((_) => readFavourites())
         .then((_) => readCartItems()
             .then((_) => {Navigator.of(context).pushNamed('home')}));
@@ -81,7 +82,7 @@ class FirebaseProvider with ChangeNotifier {
     uid = FirebaseAuth.instance.currentUser!.uid;
 
     querySnapshot = await firestore
-        .collection('Users')
+        .collection('Shop')
         .doc(uid)
         .collection('cart products')
         .get();
@@ -96,7 +97,7 @@ class FirebaseProvider with ChangeNotifier {
               price: existingCartItem.price,
               image: existingCartItem.image));
       firestore
-          .collection('Users')
+          .collection('Shop')
           .doc(uid)
           .collection('cart products')
           .doc(productId)
@@ -114,7 +115,7 @@ class FirebaseProvider with ChangeNotifier {
               image: image));
       // await firestore.collection('Users').doc(uid).set(data);
       await firestore
-          .collection('Users')
+          .collection('Shop')
           .doc(uid)
           .collection('cart products')
           .doc(productId)
@@ -134,7 +135,7 @@ class FirebaseProvider with ChangeNotifier {
     if (_favProducts.containsKey(productId)) {
       _favProducts.remove(productId);
       firestore
-          .collection('Users')
+          .collection('Shop')
           .doc(uid)
           .collection('favourite products')
           .doc(productId)
@@ -148,7 +149,7 @@ class FirebaseProvider with ChangeNotifier {
               price: price,
               image: image));
       await firestore
-          .collection('Users')
+          .collection('Shop')
           .doc(uid)
           .collection('favourite products')
           .doc(productId)
@@ -165,7 +166,7 @@ class FirebaseProvider with ChangeNotifier {
   Future<void> readCartItems() async {
     try {
       querySnapshot = await firestore
-          .collection('Users')
+          .collection('Shop')
           .doc(uid)
           .collection('cart products')
           .get();
@@ -191,7 +192,7 @@ class FirebaseProvider with ChangeNotifier {
   Future<void> readFavourites() async {
     try {
       querySnapshot = await firestore
-          .collection('Users')
+          .collection('Shop')
           .doc(uid)
           .collection('favourite products')
           .get();
@@ -216,7 +217,7 @@ class FirebaseProvider with ChangeNotifier {
   void deleteFromFavourite(String productId) {
     _favProducts.remove(productId);
     firestore
-        .collection('Users')
+        .collection('Shop')
         .doc(uid)
         .collection('favourite products')
         .doc(productId)
@@ -227,7 +228,7 @@ class FirebaseProvider with ChangeNotifier {
   void deleteFromCart(productId) async {
     _items.remove(productId);
     firestore
-        .collection('Users')
+        .collection('Shop')
         .doc(uid)
         .collection('cart products')
         .doc(productId)
@@ -247,7 +248,7 @@ class FirebaseProvider with ChangeNotifier {
             image: existingCartItem.image));
 
     firestore
-        .collection('Users')
+        .collection('Shop')
         .doc(uid)
         .collection('cart products')
         .doc(productId)
@@ -264,19 +265,19 @@ class FirebaseProvider with ChangeNotifier {
         (existingCartItem) => CartProduct(
             id: existingCartItem.id,
             title: existingCartItem.title,
-            quantity: existingCartItem.quantity == 0
-                ? existingCartItem.quantity
+            quantity: existingCartItem.quantity == 1
+                ? 1
                 : existingCartItem.quantity - 1,
             price: existingCartItem.price,
             image: existingCartItem.image));
 
     firestore
-        .collection('Users')
+        .collection('Shop')
         .doc(uid)
         .collection('cart products')
         .doc(productId)
         .update({
-      'quantity': FieldValue.increment(-1),
+      'quantity': FieldValue.increment(-1), //bug tto fix
     });
 
     notifyListeners();

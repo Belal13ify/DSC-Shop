@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class Others extends ChangeNotifier {
-  bool secured = false;
+  bool secured = true;
 
   void togglePassword() {
     secured = !secured;
