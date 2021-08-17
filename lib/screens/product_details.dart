@@ -36,8 +36,8 @@ class ProductDetails extends StatelessWidget {
             children: [
               Image.network(
                 image,
-                width: 200,
-                height: 200,
+                width: 150,
+                height: 150,
               ),
               SizedBox(
                 height: 10,
@@ -45,7 +45,7 @@ class ProductDetails extends StatelessWidget {
               Text(
                 "$title",
                 textAlign: TextAlign.center,
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               SizedBox(
                 height: 10,
@@ -58,7 +58,7 @@ class ProductDetails extends StatelessWidget {
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
               ),
               SizedBox(
-                height: 1,
+                height: 2,
               ),
               Text(
                 "$category",
@@ -66,7 +66,7 @@ class ProductDetails extends StatelessWidget {
                 style: TextStyle(fontSize: 17, fontWeight: FontWeight.w400),
               ),
               SizedBox(
-                height: 20,
+                height: 15,
               ),
               Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
                 Row(
@@ -95,7 +95,7 @@ class ProductDetails extends StatelessWidget {
                 ),
                 Text(
                   "$description",
-                  style: TextStyle(fontSize: 16),
+                  style: TextStyle(fontSize: 15),
                 ),
                 SizedBox(
                   height: 20,
@@ -106,6 +106,7 @@ class ProductDetails extends StatelessWidget {
                       onPressed: () {
                         fb.addItem(id.toString(), title, price, image);
                       },
+                      style: ElevatedButton.styleFrom(primary: Colors.black),
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         children: [
@@ -115,12 +116,15 @@ class ProductDetails extends StatelessWidget {
                             child: LocaleText(
                               "additem",
                               style: TextStyle(
-                                  fontSize: 20, fontWeight: FontWeight.bold),
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.bold),
                             ),
                           ),
                           Icon(
                             Icons.add_shopping_cart,
                             size: 35,
+                            color: Colors.grey,
                           )
                         ],
                       )),

@@ -42,7 +42,7 @@ class SingleProduct extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-              Text(title, style: TextStyle(fontSize: 16)),
+              Text(title, style: TextStyle(fontSize: 17)),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                 Text(
                   "\$$price",
@@ -60,17 +60,21 @@ class SingleProduct extends StatelessWidget {
               ]),
               ElevatedButton(
                   onPressed: addToCart,
+                  style: ElevatedButton.styleFrom(primary: Colors.black),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
                       LocaleText(
                         "additem",
                         style: TextStyle(
-                            fontSize: 16, fontWeight: FontWeight.bold),
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.bold),
                       ),
                       Icon(
                         Icons.add_shopping_cart,
                         size: 25,
+                        color: Colors.grey,
                       )
                     ],
                   ))
