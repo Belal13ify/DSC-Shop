@@ -2,7 +2,6 @@ import 'package:dsc_shop/providers/themeProvider.dart';
 import 'package:dsc_shop/screens/about.dart';
 import 'package:dsc_shop/screens/login_screen.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,7 +12,7 @@ import '../providers/firebase_provider.dart';
 class DrawerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var fb = Provider.of<FirebaseProvider>(context);
+    var fb = Provider.of<FirebaseProvider>(context, listen: false);
     return Drawer(
       child: Material(
         child: ListView(

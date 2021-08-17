@@ -60,7 +60,7 @@ class MaterialAppWithTheme extends StatelessWidget {
             'signup': (context) => Register(),
           },
           debugShowCheckedModeBanner: false,
-          theme: Provider.of<ThemeProvider>(context, listen: false).isActive
+          theme: Provider.of<ThemeProvider>(context).isActive
               ? Provider.of<ThemeProvider>(context).darkTheme
               : Provider.of<ThemeProvider>(context).lightTheme),
     );

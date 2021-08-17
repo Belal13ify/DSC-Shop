@@ -15,6 +15,7 @@ class Login extends StatelessWidget {
     final data = Provider.of<Data>(context);
     String _email = "";
     String _password = "";
+    // print('hi');
 
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
@@ -62,8 +63,8 @@ class Login extends StatelessWidget {
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
-                      decoration:
-                          kTextFieldDecoration.copyWith(labelText: 'Email'),
+                      decoration: kTextFieldDecoration.copyWith(
+                          labelText: 'Email', prefix: Icon(Icons.email)),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return ('Email required');
@@ -118,17 +119,17 @@ class Login extends StatelessWidget {
                               // shape: StadiumBorder(),
                               primary: Colors.orange,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 12),
+                                  horizontal: 8, vertical: 12),
                             ),
                             onPressed: () {
                               Navigator.of(context).pushNamed('signup');
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 2),
+                                  horizontal: 15, vertical: 2),
                               child: LocaleText(
                                 'signUp',
-                                style: TextStyle(fontSize: 19),
+                                style: TextStyle(fontSize: 16),
                               ),
                             )),
                         ElevatedButton(
@@ -136,7 +137,7 @@ class Login extends StatelessWidget {
                               // shape: StadiumBorder(),
                               primary: Colors.blue,
                               padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 12),
+                                  horizontal: 10, vertical: 12),
                             ),
                             onPressed: () async {
                               if (!_formKey.currentState!.validate()) {
@@ -152,10 +153,10 @@ class Login extends StatelessWidget {
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
-                                  horizontal: 20, vertical: 2),
+                                  horizontal: 18, vertical: 2),
                               child: LocaleText(
                                 'login',
-                                style: TextStyle(fontSize: 20),
+                                style: TextStyle(fontSize: 16),
                               ),
                             ))
                       ],

@@ -24,7 +24,6 @@ class Register extends StatelessWidget {
     TextEditingController password1Controller = TextEditingController();
     TextEditingController password2Controller = TextEditingController();
     final _formKey = GlobalKey<FormState>();
-
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,

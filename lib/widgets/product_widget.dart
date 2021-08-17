@@ -42,7 +42,7 @@ class SingleProduct extends StatelessWidget {
               SizedBox(
                 height: 15,
               ),
-              Text(title, style: TextStyle(fontSize: 17)),
+              Text(title, style: TextStyle(fontSize: 16)),
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                 Text(
                   "\$$price",

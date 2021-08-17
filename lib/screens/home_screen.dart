@@ -13,11 +13,9 @@ import 'package:provider/provider.dart';
 class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    Provider.of<ThemeProvider>(context).checkDarkMode();
     var nav = Provider.of<NavigationProvider>(context);
     var fb = Provider.of<FirebaseProvider>(context);
-    // fb.initialize();
-    // fb.readCartItems();
+
     List<Widget> selectedScreen = [Products(), Wishlist(), ShoppingCart()];
     return Scaffold(
       appBar: AppBar(

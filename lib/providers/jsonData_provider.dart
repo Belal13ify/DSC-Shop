@@ -8,7 +8,6 @@ class Data with ChangeNotifier {
   List<Product> searchedProducts = [];
 
   Future<void> getData() async {
-    products = [];
     String url = 'https://fakestoreapi.com/products';
     var response = await http.get(Uri.parse(url));
     if (response.statusCode == 200) {
@@ -21,7 +20,7 @@ class Data with ChangeNotifier {
       throw Exception("Error");
     }
 
-    notifyListeners();
+    // notifyListeners();
   }
 
   void search(String query) {
