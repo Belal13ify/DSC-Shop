@@ -115,7 +115,7 @@ class Login extends StatelessWidget {
                       children: [
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              shape: StadiumBorder(),
+                              // shape: StadiumBorder(),
                               primary: Colors.orange,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 10, vertical: 12),
@@ -124,16 +124,16 @@ class Login extends StatelessWidget {
                               Navigator.of(context).pushNamed('signup');
                             },
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 2),
                               child: LocaleText(
                                 'signUp',
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 19),
                               ),
                             )),
                         ElevatedButton(
                             style: ElevatedButton.styleFrom(
-                              shape: StadiumBorder(),
+                              // shape: StadiumBorder(),
                               primary: Colors.blue,
                               padding: EdgeInsets.symmetric(
                                   horizontal: 12, vertical: 12),
@@ -151,11 +151,11 @@ class Login extends StatelessWidget {
                               // auth.userSetup(_email);
                             },
                             child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 20, vertical: 2),
                               child: LocaleText(
                                 'login',
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 20),
                               ),
                             ))
                       ],

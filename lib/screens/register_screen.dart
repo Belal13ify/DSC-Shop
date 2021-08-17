@@ -26,6 +26,15 @@ class Register extends StatelessWidget {
     final _formKey = GlobalKey<FormState>();
 
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0.0,
+        title: Text(
+          'Create a new account',
+          style: TextStyle(fontSize: 20),
+        ),
+        centerTitle: true,
+      ),
       body: SafeArea(
           child: Form(
         key: _formKey,
@@ -84,8 +93,13 @@ class Register extends StatelessWidget {
                     TextFormField(
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
-                      decoration:
-                          kTextFieldDecoration.copyWith(labelText: 'Email'),
+                      decoration: kTextFieldDecoration.copyWith(
+                        labelText: 'Email',
+                        prefixIcon: Icon(
+                          Icons.email,
+                          color: Colors.grey,
+                        ),
+                      ),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return ('Email required');
@@ -141,18 +155,6 @@ class Register extends StatelessWidget {
                             decoration: kTextFieldDecoration.copyWith(
                               labelText: 'Confirm Password',
                               prefixIcon: Icon(Icons.lock),
-                              suffixIcon: IconButton(
-                                onPressed: () {
-                                  other.togglePassword();
-                                },
-                                icon: Icon(
-                                  other.secured
-                                      ? Icons.visibility_sharp
-                                      : Icons.visibility_off,
-                                  color: Colors.blue,
-                                  size: 22,
-                                ),
-                              ),
                             ),
                             validator: (value) {
                               _pass2 = value;
@@ -172,58 +174,33 @@ class Register extends StatelessWidget {
                     SizedBox(
                       height: 40,
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: StadiumBorder(),
-                              primary: Colors.orange,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 10, vertical: 12),
-                            ),
-                            onPressed: () async {
-                              if (!_formKey.currentState!.validate()) {
-                                return;
-                              }
+                    ElevatedButton(
+                        style: ElevatedButton.styleFrom(
+                          primary: Colors.orange,
+                          padding:
+                              EdgeInsets.symmetric(horizontal: 10, vertical: 8),
+                        ),
+                        onPressed: () async {
+                          if (!_formKey.currentState!.validate()) {
+                            return;
+                          }
 
-                              await data.getData();
-                              _username = usernameController.text;
-                              _email = emailController.text;
-                              _password = password1Controller.text;
+                          await data.getData();
+                          _username = usernameController.text;
+                          _email = emailController.text;
+                          _password = password1Controller.text;
 
-                              auth.signUp(
-                                  _username, _email, _password, context);
-                              // auth.userSetup(_email);
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: LocaleText(
-                                'signUp',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            )),
-                        ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              shape: StadiumBorder(),
-                              primary: Colors.blue,
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 12, vertical: 12),
-                            ),
-                            onPressed: () async {
-                              Navigator.pop(context);
-                            },
-                            child: Padding(
-                              padding:
-                                  const EdgeInsets.symmetric(horizontal: 5),
-                              child: LocaleText(
-                                'login',
-                                style: TextStyle(fontSize: 18),
-                              ),
-                            ))
-                      ],
-                    ),
+                          auth.signUp(_username, _email, _password, context);
+                          // auth.userSetup(_email);
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.symmetric(
+                              horizontal: 40, vertical: 5),
+                          child: LocaleText(
+                            'signUp',
+                            style: TextStyle(fontSize: 22),
+                          ),
+                        )),
                   ],
                 ),
               ],
