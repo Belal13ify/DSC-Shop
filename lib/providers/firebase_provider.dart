@@ -22,9 +22,11 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<void> userSetup(String username, String email) async {
     userEmail = email;
-    // CollectionReference users = FirebaseFirestore.instance.collection('Users');
+    CollectionReference users = FirebaseFirestore.instance.collection('Users');
     uid = auth.currentUser!.uid; // here to fix the null checking issue
-    // await users.add({'usernasme': username,'email': email, 'uid': uid});
+    await users
+        .doc(uid)
+        .set({'usernasme': username, 'email': email, 'uid': uid});
   }
 
   void signUp(String name, String email, String password, context) {
