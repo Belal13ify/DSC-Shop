@@ -26,11 +26,13 @@ class SingleProduct extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // var fb = Provider.of<FirebaseProvider>(context);
+
     return GestureDetector(
       onTap: pressed,
       child: Card(
         child: Padding(
-          padding: const EdgeInsets.only(left: 10.0, right: 10),
+          padding:
+              const EdgeInsets.only(top: 8, left: 10.0, right: 10, bottom: 5),
           child: Column(
             // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
@@ -60,9 +62,10 @@ class SingleProduct extends StatelessWidget {
               ]),
               ElevatedButton(
                   onPressed: addToCart,
-                  style: ElevatedButton.styleFrom(primary: Colors.black),
+                  style: ElevatedButton.styleFrom(
+                      primary: Colors.black, padding: EdgeInsets.all(7)),
                   child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       LocaleText(
                         "additem",

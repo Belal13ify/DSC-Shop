@@ -42,14 +42,17 @@ class Products extends StatelessWidget {
               ],
             ),
           ),
+          SizedBox(
+            height: 5,
+          ),
           Expanded(
               child: filteredProducts.isEmpty
                   ? GridView.builder(
                       padding: EdgeInsets.all(5),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 3 / 4,
-                          crossAxisSpacing: 8,
+                          childAspectRatio: 4 / 5,
+                          crossAxisSpacing: 5,
                           mainAxisSpacing: 5),
                       itemBuilder: (context, index) {
                         var productData = products[index];
@@ -60,38 +63,40 @@ class Products extends StatelessWidget {
                         num price = productData.price;
                         String image = productData.image;
 
-                        if (title.length > 18) {
-                          String strippedtitle = title.substring(0, 15);
+                        if (title.length > 17) {
+                          String strippedtitle = title.substring(0, 13) + '...';
                           title = strippedtitle;
                         }
                         bool isFavourite = fb.favProducts.containsKey(
                           productData.id.toString(),
                         );
-                        // print(productData.id.toString());
-                        return SingleProduct(
-                            title: title,
-                            price: price,
-                            imageSrc: image,
-                            isFav: isFavourite,
-                            // addToCart: () => fb.addtoCart(productData),
-                            addToCart: () => fb.addItem(
-                                productData.id.toString(),
-                                productData.title,
-                                productData.price,
-                                productData.image),
-                            addToWishlist: () => fb.addToWishList(
-                                productData.id.toString(),
-                                productData.title,
-                                productData.price,
-                                productData.image),
-                            pressed: () => productInfo(
-                                productData.id.toString(),
-                                productData.title,
-                                description,
-                                category,
-                                price,
-                                image,
-                                context));
+                        var size = MediaQuery.of(context).size;
+                        return Container(
+                          child: SingleProduct(
+                              title: title,
+                              price: price,
+                              imageSrc: image,
+                              isFav: isFavourite,
+                              // addToCart: () => fb.addtoCart(productData),
+                              addToCart: () => fb.addItem(
+                                  productData.id.toString(),
+                                  productData.title,
+                                  productData.price,
+                                  productData.image),
+                              addToWishlist: () => fb.addToWishList(
+                                  productData.id.toString(),
+                                  productData.title,
+                                  productData.price,
+                                  productData.image),
+                              pressed: () => productInfo(
+                                  productData.id.toString(),
+                                  productData.title,
+                                  description,
+                                  category,
+                                  price,
+                                  image,
+                                  context)),
+                        );
                       },
                       itemCount: products.length,
                     )

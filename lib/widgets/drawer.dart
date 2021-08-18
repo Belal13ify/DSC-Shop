@@ -12,7 +12,7 @@ import '../providers/firebase_provider.dart';
 class DrawerSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    var fb = Provider.of<FirebaseProvider>(context, listen: false);
+    var fb = Provider.of<FirebaseProvider>(context);
     return Drawer(
       child: Material(
         child: ListView(

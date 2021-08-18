@@ -183,11 +183,11 @@ class Register extends StatelessWidget {
                           if (!_formKey.currentState!.validate()) {
                             return;
                           }
-
-                          await data.getData();
                           _username = usernameController.text;
                           _email = emailController.text;
                           _password = password1Controller.text;
+
+                          await data.getData();
 
                           auth.signUp(_username, _email, _password, context);
                           // auth.userSetup(_email);

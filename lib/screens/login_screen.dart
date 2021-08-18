@@ -64,7 +64,11 @@ class Login extends StatelessWidget {
                       keyboardType: TextInputType.emailAddress,
                       controller: emailController,
                       decoration: kTextFieldDecoration.copyWith(
-                          labelText: 'Email', prefix: Icon(Icons.email)),
+                          prefixIcon: Icon(
+                            Icons.email,
+                            color: Colors.grey,
+                          ),
+                          labelText: 'Email'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
                           return ('Email required');
@@ -143,12 +147,10 @@ class Login extends StatelessWidget {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               }
-                              // openAlert();
                               _email = emailController.text;
                               _password = passwordController.text;
                               await data.getData();
-                              auth.login(
-                                  "Johm Doe", _email, _password, context);
+                              auth.login(_email, _password, context);
                               // auth.userSetup(_email);
                             },
                             child: Padding(

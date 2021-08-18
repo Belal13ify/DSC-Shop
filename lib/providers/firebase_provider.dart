@@ -8,25 +8,33 @@ class FirebaseProvider with ChangeNotifier {
   late FirebaseFirestore firestore;
   final auth = FirebaseAuth.instance;
   late QuerySnapshot querySnapshot;
-  String username = "";
-  String userEmail = "";
-  String token = "";
+  late String username;
+  late String userEmail;
   late String uid;
   // String users = 'Users';
-  // CollectionReference users = FirebaseFirestore.instance.collection('Users');
+  CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
   void initialize() {
     firestore = FirebaseFirestore.instance;
-    notifyListeners();
   }
 
-  Future<void> userSetup(String username, String email) async {
+  void getUserDetails() async {
+    uid = auth.currentUser!.uid;
+    await firestore.collection('Users').doc(uid).get().then((value) {
+      username = value.data()!['username'];
+      userEmail = value.data()!['email'];
+    });
+  }
+
+  Future<void> userSetup(String name, String email) async {
+    username = name;
     userEmail = email;
-    CollectionReference users = FirebaseFirestore.instance.collection('Users');
-    uid = auth.currentUser!.uid; // here to fix the null checking issue
+    uid = auth.currentUser!.uid;
+    // CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
     await users
         .doc(uid)
-        .set({'usernasme': username, 'email': email, 'uid': uid});
+        .set({'username': username, 'email': email, 'uid': uid});
   }
 
   void signUp(String name, String email, String password, context) {
@@ -36,24 +44,28 @@ class FirebaseProvider with ChangeNotifier {
     initialize();
     auth
         .createUserWithEmailAndPassword(email: email, password: password)
-        .then((_) => userSetup(name, email))
+        .then((_) => userSetup(name, email)) //setup in firebase
         .then((_) => readFavourites())
         .then((_) => readCartItems()
             .then((_) => {Navigator.of(context).pushNamed('home')}));
-    notifyListeners();
+    // notifyListeners();
   }
 
-  void login(String name, String email, String password, context) {
+  void login(String email, String password, context) async {
+    // CollectionReference users = FirebaseFirestore.instance.collection('Users');
+
+    // user.get().then((value) => {print(value.data())});
+
     _items = {};
     _favProducts = {};
     initialize();
     auth
         .signInWithEmailAndPassword(email: email, password: password)
-        .then((_) => userSetup(name, email))
+        .then((_) =>
+            getUserDetails()) // .then((_) => getUserDetails()) // get user details in the app
         .then((_) => readFavourites())
         .then((_) => readCartItems()
             .then((_) => {Navigator.of(context).pushNamed('home')}));
-    notifyListeners();
   }
 
   Map<String, CartProduct> _items = {};
