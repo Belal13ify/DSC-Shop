@@ -238,7 +238,6 @@ class FirebaseProvider with ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    // notifyListeners();
   }
 
   Future<void> readFavourites() async {
@@ -263,7 +262,6 @@ class FirebaseProvider with ChangeNotifier {
     } catch (e) {
       print(e);
     }
-    // notifyListeners();
   }
 
   void deleteFromFavourite(String productId) {
@@ -311,7 +309,8 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void minusItem(String productId) {
+  void minusItem(String productId) async {
+    late num quanta;
     _items.update(
         productId,
         (existingCartItem) => CartProduct(
@@ -323,14 +322,37 @@ class FirebaseProvider with ChangeNotifier {
             price: existingCartItem.price,
             image: existingCartItem.image));
 
-    firestore
+    var ref = firestore
         .collection('Shop')
         .doc(uid)
         .collection('cart products')
-        .doc(productId)
-        .update({
-      'quantity': FieldValue.increment(-1), //bug tto fix
+        .doc(productId);
+
+    await ref.get().then((value) {
+      quanta = value.data()!['quantity'];
     });
+
+    if (quanta > 1) {
+      // firestore
+      // .collection('Shop')
+      // .doc(uid)
+      // .collection('cart products')
+      // .doc(productId)
+      ref.update({
+        'quantity': FieldValue.increment(-1), //bug to fix
+      });
+    } else {
+      return;
+    }
+
+    // firestore
+    //     .collection('Shop')
+    //     .doc(uid)
+    //     .collection('cart products')
+    //     .doc(productId)
+    //     .update({
+    //   'quantity': FieldValue.increment(-1), //bug to fix
+    // });
 
     notifyListeners();
   }

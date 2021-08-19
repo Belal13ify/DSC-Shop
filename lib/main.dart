@@ -24,6 +24,30 @@ void main() async {
       [DeviceOrientation.portraitUp, DeviceOrientation.portraitDown]);
   runApp(MyApp());
 }
+/*
+
+====================================please Read Before using the app=====================
+                                       All bonus Done
+DSC Shop has the following Features 
+
+1- Multi Languages Support (English and Arabic), user can switch between languages and save it for next login with no changes
+2- Multi Users Registration and login, Every user has own login, Favourites, Cart products, firebase name,email and photo
+
+3- Dark mode enabled and set with shared preferences for the device
+4- image picker to pick a photo from the Galery and save into firebase, can change whenever the user changes it and saved in firebase for next login 
+5- Home, Favourite, Cart pages, can add, delete, read, and update products from either favourites and cart screens and update the changes in firebase
+6- every product has title, price, quantity, descriptions and updating in firebase
+
+7-any user register can has a default profile photo but the user can change the profile photo and saves in firebase for next logins
+
+8- cart page showing all items added, with their total price, you can increase , decrease your quantity as you want and can swipe left or right to delete and all changes will reflect on firebase
+9- can save favourite and reflect on firebase, with eiher add or delete
+
+
+10- no statful widget at all, only used provider
+
+
+*/
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
