@@ -333,26 +333,12 @@ class FirebaseProvider with ChangeNotifier {
     });
 
     if (quanta > 1) {
-      // firestore
-      // .collection('Shop')
-      // .doc(uid)
-      // .collection('cart products')
-      // .doc(productId)
       ref.update({
-        'quantity': FieldValue.increment(-1), //bug to fix
+        'quantity': FieldValue.increment(-1),
       });
     } else {
       return;
     }
-
-    // firestore
-    //     .collection('Shop')
-    //     .doc(uid)
-    //     .collection('cart products')
-    //     .doc(productId)
-    //     .update({
-    //   'quantity': FieldValue.increment(-1), //bug to fix
-    // });
 
     notifyListeners();
   }
