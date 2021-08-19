@@ -52,7 +52,7 @@ class Login extends StatelessWidget {
                 LocaleText('loginPageText',
                     // textAlign: TextAlign.center,
                     style:
-                        TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
+                        TextStyle(fontSize: 17, fontWeight: FontWeight.bold)),
                 SizedBox(
                   height: 40.0,
                 ),

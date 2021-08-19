@@ -1,6 +1,5 @@
 import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:dsc_shop/providers/navScreenProvider.dart';
-import 'package:dsc_shop/providers/themeProvider.dart';
 import 'package:dsc_shop/screens/products_screen.dart';
 import 'package:dsc_shop/screens/shoppingCart_screen.dart';
 import 'package:dsc_shop/screens/wishlist_screen.dart';

@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import '../providers/firebase_provider.dart';
 
 class FavouriteItem extends StatelessWidget {
   final String id;
