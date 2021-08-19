@@ -27,7 +27,7 @@ class Products extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Product> products = Provider.of<Data>(context, listen: false).products;
     List<Product> filteredProducts =
-        Provider.of<Data>(context).searchedProducts;
+        Provider.of<Data>(context, listen: false).searchedProducts;
     return Consumer<FirebaseProvider>(builder: (context, fb, child) {
       return Column(
         children: [
@@ -51,7 +51,7 @@ class Products extends StatelessWidget {
                       padding: EdgeInsets.all(5),
                       gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                           crossAxisCount: 2,
-                          childAspectRatio: 4 / 5,
+                          childAspectRatio: 3 / 4,
                           crossAxisSpacing: 5,
                           mainAxisSpacing: 5),
                       itemBuilder: (context, index) {
@@ -70,7 +70,7 @@ class Products extends StatelessWidget {
                         bool isFavourite = fb.favProducts.containsKey(
                           productData.id.toString(),
                         );
-                        var size = MediaQuery.of(context).size;
+                        // var size = MediaQuery.of(context).size;
                         return Container(
                           child: SingleProduct(
                               title: title,

@@ -48,7 +48,7 @@ class SingleProduct extends StatelessWidget {
               Row(mainAxisAlignment: MainAxisAlignment.spaceAround, children: [
                 Text(
                   "\$$price",
-                  style: TextStyle(fontSize: 17, fontWeight: FontWeight.bold),
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                 ),
                 IconButton(
                     onPressed: addToWishlist,
@@ -57,7 +57,7 @@ class SingleProduct extends StatelessWidget {
                       color:
                           // Colors.red,
                           isFav ? Colors.red : Colors.black,
-                      size: 25,
+                      size: 28,
                     ))
               ]),
               ElevatedButton(
@@ -71,12 +71,12 @@ class SingleProduct extends StatelessWidget {
                         "additem",
                         style: TextStyle(
                             color: Colors.white,
-                            fontSize: 16,
+                            fontSize: 15,
                             fontWeight: FontWeight.bold),
                       ),
                       Icon(
                         Icons.add_shopping_cart,
-                        size: 25,
+                        size: 23,
                         color: Colors.grey,
                       )
                     ],

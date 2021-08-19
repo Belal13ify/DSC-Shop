@@ -3,6 +3,7 @@ import 'package:dsc_shop/providers/jsonData_provider.dart';
 import 'package:dsc_shop/providers/navScreenProvider.dart';
 import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:dsc_shop/providers/themeProvider.dart';
+import 'package:dsc_shop/screens/change_user_Details.dart';
 import 'package:dsc_shop/screens/home_screen.dart';
 import 'package:dsc_shop/screens/login_screen.dart';
 import 'package:dsc_shop/screens/register_screen.dart';
@@ -58,6 +59,7 @@ class MaterialAppWithTheme extends StatelessWidget {
             'cart': (context) => ShoppingCart(),
             'login': (context) => Login(),
             'signup': (context) => Register(),
+            'edit': (context) => ChangeDetail()
           },
           debugShowCheckedModeBanner: false,
           theme: Provider.of<ThemeProvider>(context).isActive

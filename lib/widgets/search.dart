@@ -8,7 +8,7 @@ class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // TextEditingController searchController = TextEditingController();
-    var search = Provider.of<Data>(context, listen: false);
+    var search = Provider.of<Data>(context);
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
         child: TextField(

@@ -1,6 +1,11 @@
+import 'dart:io';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:dsc_shop/models/favourite.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
+import 'package:image_picker/image_picker.dart';
+import 'package:permission_handler/permission_handler.dart';
 import '../models/cart.dart';
 import 'package:flutter/material.dart';
 
@@ -11,6 +16,7 @@ class FirebaseProvider with ChangeNotifier {
   late String username;
   late String userEmail;
   late String uid;
+  late String userPhoto;
   // String users = 'Users';
   CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
@@ -21,20 +27,54 @@ class FirebaseProvider with ChangeNotifier {
   void getUserDetails() async {
     uid = auth.currentUser!.uid;
     await firestore.collection('Users').doc(uid).get().then((value) {
-      username = value.data()!['username'];
+      username = value.data()!['Name'];
       userEmail = value.data()!['email'];
+      userPhoto = value.data()!['photo'];
     });
+  }
+
+  void changePhoto() async {
+    final _storage = FirebaseStorage.instance;
+    final _picker = ImagePicker();
+
+    XFile? image;
+
+    var status = await Permission.photos.request();
+
+    if (status.isGranted) {
+      image = await _picker.pickImage(source: ImageSource.gallery);
+      var file = File(image!.path);
+      var snapshot = await _storage
+          .ref()
+          .child('Users/$uid/photos')
+          .putFile(file)
+          .whenComplete(() => print('Completed'));
+
+      userPhoto = await snapshot.ref.getDownloadURL();
+      await users.doc(uid).update({'photo': userPhoto});
+    } else {
+      print('Permission Denied');
+    }
+    notifyListeners();
+  }
+
+  Future<void> changeName(String newUsername) async {
+    username = newUsername;
+    await users.doc(uid).update({'Name': username});
+    notifyListeners();
   }
 
   Future<void> userSetup(String name, String email) async {
     username = name;
     userEmail = email;
     uid = auth.currentUser!.uid;
+    String profilePhoto =
+        "https://firebasestorage.googleapis.com/v0/b/dsc-shop.appspot.com/o/profile.png?alt=media&token=43852a9b-8baa-48a9-917a-80bc5b256665";
     // CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
-    await users
-        .doc(uid)
-        .set({'username': username, 'email': email, 'uid': uid});
+    await users.doc(uid).set(
+        {'Name': username, 'email': email, 'uid': uid, 'photo': profilePhoto});
+    userPhoto = profilePhoto;
   }
 
   void signUp(String name, String email, String password, context) {
@@ -53,9 +93,6 @@ class FirebaseProvider with ChangeNotifier {
 
   void login(String email, String password, context) async {
     // CollectionReference users = FirebaseFirestore.instance.collection('Users');
-
-    // user.get().then((value) => {print(value.data())});
-
     _items = {};
     _favProducts = {};
     initialize();

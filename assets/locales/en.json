@@ -20,5 +20,11 @@
     "appinfo": "About DSC Shop",
     "describe": "Description",
     "category": "Category",
-    "price": "Price"
+    "price": "Price",
+    "edit": "Edit Profile",
+    "pick": "Pick a Photo",
+    "save": "SAVE",
+    "profileText": "Press Save to Change your name.",
+    "loginPageText": "Sign up or Login to an Existing Account",
+    "total": "Total: "
 }

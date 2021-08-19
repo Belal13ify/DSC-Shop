@@ -25,27 +25,29 @@ class DrawerSection extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       CircleAvatar(
-                        radius: 37,
-                        child: Image.asset(
-                          'assets/images/logo.png',
-                          // width: 70,
+                        backgroundColor: Colors.transparent,
+                        backgroundImage: NetworkImage(
+                          fb.userPhoto,
                         ),
+                        radius: 42,
                       ),
                       SizedBox(
-                        height: 8,
+                        height: 5,
                       ),
                       Text(fb.username),
                       SizedBox(
-                        height: 15,
+                        height: 5,
                       ),
                       Text(
                         fb.userEmail,
-                        style: TextStyle(fontSize: 15),
+                        style: TextStyle(fontSize: 12),
                       )
                     ],
                   ),
                   IconButton(
-                      onPressed: () {},
+                      onPressed: () {
+                        Navigator.of(context).pushNamed('edit');
+                      },
                       icon: Icon(
                         Icons.settings,
                         size: 30,

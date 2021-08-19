@@ -1,7 +1,6 @@
 import 'package:dsc_shop/providers/app_provider.dart';
 import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:dsc_shop/providers/jsonData_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dsc_shop/constants.dart';
 import 'package:flutter_locales/flutter_locales.dart';
@@ -76,12 +75,12 @@ class Register extends StatelessWidget {
                       keyboardType: TextInputType.text,
                       controller: usernameController,
                       decoration:
-                          kTextFieldDecoration.copyWith(labelText: 'Username'),
+                          kTextFieldDecoration.copyWith(labelText: 'Name'),
                       validator: (value) {
                         if (value == null || value.isEmpty) {
-                          return ('Username required');
+                          return ('Name required');
                         } else if (value.length < 4) {
-                          return "Username Can't be less than 4 characters";
+                          return "Name Can't be less than 4 characters";
                         }
                         return null;
                       },
@@ -184,7 +183,7 @@ class Register extends StatelessWidget {
                             return;
                           }
                           _username = usernameController.text;
-                          _email = emailController.text;
+                          _email = emailController.text.trim();
                           _password = password1Controller.text;
 
                           await data.getData();

@@ -1,7 +1,6 @@
 import 'package:dsc_shop/providers/app_provider.dart';
 import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:dsc_shop/providers/jsonData_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:dsc_shop/constants.dart';
 import 'package:flutter_locales/flutter_locales.dart';
@@ -12,7 +11,7 @@ class Login extends StatelessWidget {
   Widget build(BuildContext context) {
     final auth = Provider.of<FirebaseProvider>(context);
     // auth.initialize();
-    final data = Provider.of<Data>(context);
+    final data = Provider.of<Data>(context, listen: false);
     String _email = "";
     String _password = "";
     // print('hi');
@@ -50,8 +49,8 @@ class Login extends StatelessWidget {
                 SizedBox(
                   height: 40.0,
                 ),
-                Text('Sign up or Login to an existing account',
-                    textAlign: TextAlign.center,
+                LocaleText('loginPageText',
+                    // textAlign: TextAlign.center,
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 SizedBox(
@@ -147,7 +146,7 @@ class Login extends StatelessWidget {
                               if (!_formKey.currentState!.validate()) {
                                 return;
                               }
-                              _email = emailController.text;
+                              _email = emailController.text.trim();
                               _password = passwordController.text;
                               await data.getData();
                               auth.login(_email, _password, context);
