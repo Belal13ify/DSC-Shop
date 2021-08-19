@@ -164,6 +164,7 @@ class FirebaseProvider with ChangeNotifier {
               quantity: 1,
               price: price,
               image: image));
+
       // await firestore.collection('Users').doc(uid).set(data);
       await firestore
           .collection('Shop')

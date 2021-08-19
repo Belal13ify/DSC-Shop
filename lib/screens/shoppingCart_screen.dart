@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_locales/flutter_locales.dart';
 import '../widgets/cart_item.dart';
 import 'package:dsc_shop/providers/firebase_provider.dart';
 import 'package:provider/provider.dart';
@@ -7,8 +8,7 @@ class ShoppingCart extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var fb = Provider.of<FirebaseProvider>(context, listen: false);
-    // fb.initialize();
-    // print('hi');
+
     return Column(
       children: [
         Padding(
@@ -20,8 +20,8 @@ class ShoppingCart extends StatelessWidget {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                        "Total: ",
+                      LocaleText(
+                        "total",
                         style: TextStyle(fontSize: 20),
                       ),
                       Chip(

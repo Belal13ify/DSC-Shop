@@ -33,7 +33,7 @@ class HomeScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   CircleAvatar(
-                    radius: 10,
+                    radius: 12,
                     backgroundColor: Colors.red,
                     child: Text(
                       fb.itemCount.toString(),
