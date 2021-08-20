@@ -25,10 +25,10 @@ void main() async {
   runApp(MyApp());
 }
 /*
-
 ====================================please Read Before using the app=====================
-                                       All bonus Done
-DSC Shop has the following Features 
+**************************************All bonus Done********************************
+
+                             .DSC Shop has the following Features. 
 
 1- Multi Languages Support (English and Arabic), user can switch between languages and save it for next login with no changes
 2- Multi Users Registration and login, Every user has own login, Favourites, Cart products, firebase name,email and photo
@@ -43,8 +43,9 @@ DSC Shop has the following Features
 8- cart page showing all items added, with their total price, you can increase , decrease your quantity as you want and can swipe left or right to delete and all changes will reflect on firebase
 9- can save favourite and reflect on firebase, with eiher add or delete
 
+10- search feature for searching for a specific Product
 
-10- no statful widget at all, only used provider
+11- no statful widget at all, only used provider
 
 
 */
