@@ -27,8 +27,8 @@ class Register extends StatelessWidget {
       appBar: AppBar(
         backgroundColor: Colors.transparent,
         elevation: 0.0,
-        title: Text(
-          'Create a new account',
+        title: LocaleText(
+          'signUp',
           style: TextStyle(fontSize: 20),
         ),
         centerTitle: true,
@@ -61,8 +61,8 @@ class Register extends StatelessWidget {
                 SizedBox(
                   height: 15.0,
                 ),
-                Text('Register a new Account',
-                    textAlign: TextAlign.center,
+                LocaleText('signUp',
+                    // textAlign: TextAlign.center,
                     style:
                         TextStyle(fontSize: 20, fontWeight: FontWeight.bold)),
                 SizedBox(
