@@ -24,7 +24,7 @@ class FirebaseProvider with ChangeNotifier {
     firestore = FirebaseFirestore.instance;
   }
 
-  void getUserDetails() async {
+  Future<void> getUserDetails() async {
     uid = auth.currentUser!.uid;
     await firestore.collection('Users').doc(uid).get().then((value) {
       username = value.data()!['Name'];
@@ -33,7 +33,13 @@ class FirebaseProvider with ChangeNotifier {
     });
   }
 
-  void changePhoto() async {
+  Future<void> changeName(String newUsername) async {
+    username = newUsername;
+    await users.doc(uid).update({'Name': username});
+    notifyListeners();
+  }
+
+  Future<void> changePhoto() async {
     final _storage = FirebaseStorage.instance;
     final _picker = ImagePicker();
 
@@ -58,12 +64,6 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> changeName(String newUsername) async {
-    username = newUsername;
-    await users.doc(uid).update({'Name': username});
-    notifyListeners();
-  }
-
   Future<void> userSetup(String name, String email) async {
     username = name;
     userEmail = email;
@@ -77,32 +77,33 @@ class FirebaseProvider with ChangeNotifier {
     userPhoto = profilePhoto;
   }
 
-  void signUp(String name, String email, String password, context) {
-    username = name;
-    _items = {};
-    _favProducts = {};
-    initialize();
-    auth
-        .createUserWithEmailAndPassword(email: email, password: password)
-        .then((_) => userSetup(name, email)) //setup in firebase
-        .then((_) => readFavourites())
-        .then((_) => readCartItems()
-            .then((_) => {Navigator.of(context).pushNamed('home')}));
-    // notifyListeners();
-  }
-
-  void login(String email, String password, context) async {
+  Future<void> login(String email, String password, context) async {
     // CollectionReference users = FirebaseFirestore.instance.collection('Users');
     _items = {};
     _favProducts = {};
     initialize();
     auth
         .signInWithEmailAndPassword(email: email, password: password)
-        .then((_) =>
-            getUserDetails()) // .then((_) => getUserDetails()) // get user details in the app
-        .then((_) => readFavourites())
-        .then((_) => readCartItems()
-            .then((_) => {Navigator.of(context).pushNamed('home')}));
+        .then((_) => {Navigator.of(context).pushNamed('home')});
+
+    await getUserDetails(); // get user details in the app
+    await readFavourites();
+    await readCartItems();
+  }
+
+  Future<void> signUp(
+      String name, String email, String password, context) async {
+    username = name;
+    _items = {};
+    _favProducts = {};
+    initialize();
+    auth
+        .createUserWithEmailAndPassword(email: email, password: password)
+        .then((_) => {Navigator.of(context).pushNamed('home')});
+    await userSetup(name, email); //setup in firebase
+    await readFavourites();
+    await readCartItems();
+    // notifyListeners();
   }
 
   Map<String, CartProduct> _items = {};
