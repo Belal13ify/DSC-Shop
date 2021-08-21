@@ -109,4 +109,30 @@ class Others extends ChangeNotifier {
       },
     );
   }
+
+  Future<void> networkError(context) async {
+    return showDialog(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Connection Error!'),
+          content: SingleChildScrollView(
+            child: Text('Please Check your Internet Connection.'),
+          ),
+          actions: <Widget>[
+            TextButton(
+              child: Text(
+                'OK',
+                style: TextStyle(fontSize: 20),
+              ),
+              onPressed: () {
+                Navigator.pop(context);
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
 }

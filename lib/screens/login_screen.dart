@@ -148,9 +148,12 @@ class Login extends StatelessWidget {
                               }
                               _email = emailController.text.trim();
                               _password = passwordController.text;
-                              await data.getData();
+                              try {
+                                await data.getData();
+                              } catch (e) {
+                                print(e);
+                              }
                               auth.login(_email, _password, context);
-                              // auth.userSetup(_email);
                             },
                             child: Padding(
                               padding: const EdgeInsets.symmetric(
