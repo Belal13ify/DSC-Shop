@@ -8,6 +8,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:permission_handler/permission_handler.dart';
 import '../models/cart.dart';
 import 'package:flutter/material.dart';
+import '../providers/app_provider.dart';
+import 'package:provider/provider.dart';
 
 class FirebaseProvider with ChangeNotifier {
   late FirebaseFirestore firestore;
@@ -110,13 +112,25 @@ class FirebaseProvider with ChangeNotifier {
     _items = {};
     _favProducts = {};
     initialize();
-    await auth.signInWithEmailAndPassword(email: email, password: password);
-    await getUserDetails() // get user details in the app from firebase
+    try {
+      await auth.signInWithEmailAndPassword(email: email, password: password);
+      await getUserDetails() // get user details in the app from firebase
 
-        .then((_) => {Navigator.of(context).pushNamed('home')});
+          .then((_) => {Navigator.of(context).pushNamed('home')});
 
-    await readFavourites(); //reading the favourite
-    await readCartItems(); // reading cart
+      await readFavourites(); //reading the favourite
+      await readCartItems(); // reading cart
+
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        Provider.of<Others>(context, listen: false).notFound(context);
+      } else if (e.code == 'wrong-password') {
+        Provider.of<Others>(context, listen: false).wrongPassword(context);
+      }
+    } catch (e) {
+      print(e);
+    }
+    // await auth.signInWithEmailAndPassword(email: email, password: password);
   }
 
 //Sign Up
@@ -127,11 +141,22 @@ class FirebaseProvider with ChangeNotifier {
     _items = {};
     _favProducts = {};
     initialize();
-    await auth.createUserWithEmailAndPassword(email: email, password: password);
-    await userSetup(name, email) //setup in firebase
-        .then((_) => {Navigator.of(context).pushNamed('home')});
-    await readFavourites();
-    await readCartItems();
+    try {
+      await auth.createUserWithEmailAndPassword(
+          email: email, password: password);
+      await userSetup(name, email) //setup in firebase
+          .then((_) => {Navigator.of(context).pushNamed('home')});
+      await readFavourites();
+      await readCartItems();
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'weak-password') {
+        Provider.of<Others>(context, listen: false).weekPassword(context);
+      } else if (e.code == 'email-already-in-use') {
+        Provider.of<Others>(context, listen: false).alreadyExist(context);
+      }
+    } catch (e) {
+      print(e);
+    }
   }
 
   //Add items to the Cart
