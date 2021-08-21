@@ -24,6 +24,31 @@ class FirebaseProvider with ChangeNotifier {
     firestore = FirebaseFirestore.instance;
   }
 
+// Cart Item Products and Favourites
+  Map<String, CartProduct> _items = {};
+
+  Map<String, CartProduct> get items {
+    return {..._items};
+  }
+
+  Map<String, FavouriteProduct> _favProducts = {};
+  Map<String, FavouriteProduct> get favProducts {
+    return {..._favProducts};
+  }
+
+  int get itemCount {
+    return _items.length;
+  }
+
+  num get totalAmount {
+    var total = 0.0;
+    _items.forEach((key, cartProduct) {
+      total += cartProduct.price * cartProduct.quantity;
+    });
+    return total;
+  }
+
+//Gettng Details from Firebase
   Future<void> getUserDetails() async {
     uid = auth.currentUser!.uid;
     await firestore.collection('Users').doc(uid).get().then((value) {
@@ -33,12 +58,14 @@ class FirebaseProvider with ChangeNotifier {
     });
   }
 
+// Changing User Name
   Future<void> changeName(String newUsername) async {
     username = newUsername;
     await users.doc(uid).update({'Name': username});
     notifyListeners();
   }
 
+// Changing User Photo
   Future<void> changePhoto() async {
     final _storage = FirebaseStorage.instance;
     final _picker = ImagePicker();
@@ -64,21 +91,22 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
+  //User Setup in firebase
+
   Future<void> userSetup(String name, String email) async {
     username = name;
     userEmail = email;
     uid = auth.currentUser!.uid;
     String profilePhoto =
         "https://firebasestorage.googleapis.com/v0/b/dsc-shop.appspot.com/o/profile.png?alt=media&token=43852a9b-8baa-48a9-917a-80bc5b256665";
-    // CollectionReference users = FirebaseFirestore.instance.collection('Users');
 
     await users.doc(uid).set(
         {'Name': username, 'email': email, 'uid': uid, 'photo': profilePhoto});
     userPhoto = profilePhoto;
   }
 
+//Login
   Future<void> login(String email, String password, context) async {
-    // CollectionReference users = FirebaseFirestore.instance.collection('Users');
     _items = {};
     _favProducts = {};
     initialize();
@@ -87,9 +115,11 @@ class FirebaseProvider with ChangeNotifier {
         .then((_) => {Navigator.of(context).pushNamed('home')});
 
     await getUserDetails(); // get user details in the app
-    await readFavourites();
-    await readCartItems();
+    await readFavourites(); //reading the favourite
+    await readCartItems(); // reading cart
   }
+
+//Sign Up
 
   Future<void> signUp(
       String name, String email, String password, context) async {
@@ -106,38 +136,12 @@ class FirebaseProvider with ChangeNotifier {
     // notifyListeners();
   }
 
-  Map<String, CartProduct> _items = {};
-
-  Map<String, CartProduct> get items {
-    return {..._items};
-  }
-
-  Map<String, FavouriteProduct> _favProducts = {};
-  Map<String, FavouriteProduct> get favProducts {
-    return {..._favProducts};
-  }
-
-  int get itemCount {
-    return _items.length;
-  }
-
-  num get totalAmount {
-    var total = 0.0;
-    _items.forEach((key, cartProduct) {
-      total += cartProduct.price * cartProduct.quantity;
-    });
-    return total;
-  }
+  //Add items to the Cart
 
   Future<void> addItem(
       String productId, String title, num price, String image) async {
     uid = FirebaseAuth.instance.currentUser!.uid;
 
-    querySnapshot = await firestore
-        .collection('Shop')
-        .doc(uid)
-        .collection('cart products')
-        .get();
     if (_items.containsKey(productId)) {
       //change quanity
       _items.update(
@@ -148,6 +152,9 @@ class FirebaseProvider with ChangeNotifier {
               quantity: existingCartItem.quantity + 1,
               price: existingCartItem.price,
               image: existingCartItem.image));
+
+      // changing quantity For firebase:
+
       firestore
           .collection('Shop')
           .doc(uid)
@@ -166,7 +173,7 @@ class FirebaseProvider with ChangeNotifier {
               price: price,
               image: image));
 
-      // await firestore.collection('Users').doc(uid).set(data);
+      // adding new product to firebase cart
       await firestore
           .collection('Shop')
           .doc(uid)
@@ -183,6 +190,7 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
+//Add to favourits
   Future<void> addToWishList(
       String productId, String title, num price, String image) async {
     if (_favProducts.containsKey(productId)) {
