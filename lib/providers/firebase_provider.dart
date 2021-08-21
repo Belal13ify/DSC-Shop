@@ -174,7 +174,7 @@ class FirebaseProvider with ChangeNotifier {
               image: image));
 
       // adding new product to firebase cart
-      await firestore
+      firestore
           .collection('Shop')
           .doc(uid)
           .collection('cart products')
@@ -209,7 +209,7 @@ class FirebaseProvider with ChangeNotifier {
               title: title,
               price: price,
               image: image));
-      await firestore
+      firestore
           .collection('Shop')
           .doc(uid)
           .collection('favourite products')
@@ -280,7 +280,7 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<void> deleteFromFavourite(String productId) async {
     _favProducts.remove(productId);
-    await firestore
+    firestore
         .collection('Shop')
         .doc(uid)
         .collection('favourite products')
@@ -293,7 +293,7 @@ class FirebaseProvider with ChangeNotifier {
 
   Future<void> deleteFromCart(productId) async {
     _items.remove(productId);
-    await firestore
+    firestore
         .collection('Shop')
         .doc(uid)
         .collection('cart products')
@@ -313,7 +313,7 @@ class FirebaseProvider with ChangeNotifier {
             price: existingCartItem.price,
             image: existingCartItem.image));
 
-    await firestore
+    firestore
         .collection('Shop')
         .doc(uid)
         .collection('cart products')
