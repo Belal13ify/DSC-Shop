@@ -224,6 +224,7 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
+//Reading Cart Items from firebase and upadting in the app
   Future<void> readCartItems() async {
     try {
       querySnapshot = await firestore
@@ -249,6 +250,8 @@ class FirebaseProvider with ChangeNotifier {
     }
   }
 
+  //Readng the favourites from firebase and update in the app
+
   Future<void> readFavourites() async {
     try {
       querySnapshot = await firestore
@@ -273,9 +276,11 @@ class FirebaseProvider with ChangeNotifier {
     }
   }
 
-  void deleteFromFavourite(String productId) {
+  //Deleting Favourite from app and firebase
+
+  Future<void> deleteFromFavourite(String productId) async {
     _favProducts.remove(productId);
-    firestore
+    await firestore
         .collection('Shop')
         .doc(uid)
         .collection('favourite products')
@@ -284,9 +289,11 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteFromCart(productId) async {
+  //Deleting item from Cart in app and firebase
+
+  Future<void> deleteFromCart(productId) async {
     _items.remove(productId);
-    firestore
+    await firestore
         .collection('Shop')
         .doc(uid)
         .collection('cart products')
@@ -295,8 +302,8 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void plusItem(String productId) {
-    print(productId);
+//Changing Quantity  +++
+  Future<void> plusItem(String productId) async {
     _items.update(
         productId,
         (existingCartItem) => CartProduct(
@@ -306,7 +313,7 @@ class FirebaseProvider with ChangeNotifier {
             price: existingCartItem.price,
             image: existingCartItem.image));
 
-    firestore
+    await firestore
         .collection('Shop')
         .doc(uid)
         .collection('cart products')
@@ -318,7 +325,8 @@ class FirebaseProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  void minusItem(String productId) async {
+//Changing Quantity ---
+  Future<void> minusItem(String productId) async {
     late num quanta;
     _items.update(
         productId,
