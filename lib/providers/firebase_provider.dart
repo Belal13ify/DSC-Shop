@@ -110,11 +110,11 @@ class FirebaseProvider with ChangeNotifier {
     _items = {};
     _favProducts = {};
     initialize();
-    auth
-        .signInWithEmailAndPassword(email: email, password: password)
+    await auth.signInWithEmailAndPassword(email: email, password: password);
+    await getUserDetails() // get user details in the app from firebase
+
         .then((_) => {Navigator.of(context).pushNamed('home')});
 
-    await getUserDetails(); // get user details in the app
     await readFavourites(); //reading the favourite
     await readCartItems(); // reading cart
   }
@@ -127,13 +127,11 @@ class FirebaseProvider with ChangeNotifier {
     _items = {};
     _favProducts = {};
     initialize();
-    auth
-        .createUserWithEmailAndPassword(email: email, password: password)
+    await auth.createUserWithEmailAndPassword(email: email, password: password);
+    await userSetup(name, email) //setup in firebase
         .then((_) => {Navigator.of(context).pushNamed('home')});
-    await userSetup(name, email); //setup in firebase
     await readFavourites();
     await readCartItems();
-    // notifyListeners();
   }
 
   //Add items to the Cart

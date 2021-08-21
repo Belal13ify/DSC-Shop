@@ -7,7 +7,6 @@ TextEditingController searchController = TextEditingController();
 class Search extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // TextEditingController searchController = TextEditingController();
     var search = Provider.of<Data>(context);
     return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15),
@@ -18,8 +17,6 @@ class Search extends StatelessWidget {
             } else {
               search.search(val);
             }
-
-            // value.search(val);
           },
           controller: searchController,
           style: TextStyle(
