@@ -27,7 +27,7 @@ class Products extends StatelessWidget {
   Widget build(BuildContext context) {
     List<Product> products = Provider.of<Data>(context, listen: false).products;
     List<Product> filteredProducts =
-        Provider.of<Data>(context, listen: false).searchedProducts;
+        Provider.of<Data>(context).searchedProducts;
     return Consumer<FirebaseProvider>(builder: (context, fb, child) {
       return Column(
         children: [
