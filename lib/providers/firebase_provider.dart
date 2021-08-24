@@ -57,6 +57,7 @@ class FirebaseProvider with ChangeNotifier {
       username = value.data()!['Name'];
       userEmail = value.data()!['email'];
       userPhoto = value.data()!['photo'];
+      print(username);
     });
   }
 

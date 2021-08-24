@@ -24,10 +24,14 @@ class ChangeDetail extends StatelessWidget {
                 onPressed: () async {
                   if (!_key.currentState!.validate()) {
                     return;
+                  } else if (usernameController.text == "") {
+                    newUserName = fb.username;
+                    Navigator.of(context).pop();
+                  } else {
+                    newUserName = usernameController.text;
+                    fb.changeName(newUserName);
+                    Navigator.of(context).pop();
                   }
-                  newUserName = usernameController.text;
-
-                  fb.changeName(newUserName);
                 },
                 child: LocaleText(
                   "save",
@@ -98,7 +102,7 @@ class ChangeDetail extends StatelessWidget {
                               labelText: 'New username'),
                           validator: (value) {
                             if (value == null || value.isEmpty) {
-                              return ('Username required');
+                              newUserName = fb.username;
                             } else if (value.length < 4) {
                               return "Username Can't be less than 4 characters";
                             }
